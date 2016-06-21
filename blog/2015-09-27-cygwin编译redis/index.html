@@ -1,0 +1,153 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-EN" lang="en-EN">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.15" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> cygwin编译redis &middot; JasonLiu&#39;s Blog </title>
+
+  
+  <link rel="stylesheet" href="http://jasonliu798.github.io/css/poole.css">
+  <link rel="stylesheet" href="http://jasonliu798.github.io/css/syntax.css">
+  <link rel="stylesheet" href="http://jasonliu798.github.io/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="JasonLiu&#39;s Blog" />
+</head>
+
+	<body class="">
+		<div class="sidebar">
+  <div class="container sidebar-sticky">
+
+    <div class="sidebar-about">
+      <a href="http://jasonliu798.github.io/"><h1>JasonLiu&#39;s Blog</h1></a>
+      <p class="lead">
+      An elegant open source and mobile first theme for <a href="http://hugo.spf13.com">hugo</a> made by <a href="http://twitter.com/mdo">@mdo</a>. Originally made for Jekyll.
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li><a href="/">Home</a> </li>
+      
+        <li><a href="/"> JasonLiu&#39;s Blog </a></li>
+      
+        <li><a href="https://www.google.com/search?q=andrew&#43;ridgeley"> The other guy from Wham! </a></li>
+      
+        <li><a href="https://www.github.com"> This theme - add link </a></li>
+      
+    </ul>
+
+    <p>&copy; 2016. All rights reserved. </p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>cygwin编译redis</h1>
+			  <span class="post-date">Sun, Sep 27, 2015</span>
+
+				<ul>
+				
+				
+				</ul>
+
+			      <p>由于经常使用cygwin，windows上又没有命令行版的redis客户端，因此准备编译一个，没想到遇到一个恶心问题。</p>
+
+<p>先到官网下了源码</p>
+
+<pre><code class="language-shell">wget https://github.com/antirez/redis/archive/2.8.22.tar.gz
+tar -zpxvf redis-2.8.22.tar.gz
+</code></pre>
+
+<p>cygwin需要安装gcc和make，使用setup.exe安装，安完后的环境</p>
+
+<pre><code>$ gcc -v
+COLLECT_GCC=gcc
+COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-cygwin/4.9.3/lto-wrapper.exe
+目标：x86_64-pc-cygwin
+
+$ make -v
+GNU Make 4.1
+Built for x86_64-unknown-cygwin
+Copyright (C) 1988-2014 Free Software Foundation, Inc.
+</code></pre>
+
+<p>编译需要修改几个源文件，参考<a href="http://my.oschina.net/maxid/blog/186506">Windows 7 64位下编译Redis-2.8.3/Redis-3.0.1</a></p>
+
+<pre><code>src/redis.h修改
+/* Cygwin Fix */   
+#ifdef __CYGWIN__   
+#ifndef SA_ONSTACK   
+#define SA_ONSTACK 0x08000000   
+#endif   
+#endif
+/deps/hiredis/net.c 在 #include &quot;sds.h&quot;后增加以下代码
+/* Cygwin Fix */   
+#ifdef __CYGWIN__
+#define TCP_KEEPCNT 8
+#define TCP_KEEPINTVL 150
+#define TCP_KEEPIDLE 14400
+#endif
+</code></pre>
+
+<p>开始编译</p>
+
+<pre><code>cd deps
+$ make lua hiredis linenoise
+</code></pre>
+
+<p>问题来了，提示了一堆类型找不到</p>
+
+<pre><code>/usr/include/netinet/tcp.h:54:2: error: unknown type name ‘u_short’
+</code></pre>
+
+<p>查看编译提示得知hiredis/net.c中include了<netinet/tcp.h>，tcp.h中需要u_short这些类型，这些类型都是定义在<sys/types.h>头文件中，检查代码并没有缺少include <sys/types.h>，使用gcc -v deps/hiredis/net.c，查看头文件搜索目录</p>
+
+<pre><code>#include &quot;...&quot; 搜索从这里开始：
+#include &lt;...&gt; 搜索从这里开始：
+ /usr/lib/gcc/x86_64-pc-cygwin/4.9.3/include
+ /usr/lib/gcc/x86_64-pc-cygwin/4.9.3/include-fixed
+ /usr/include
+ /usr/lib/gcc/x86_64-pc-cygwin/4.9.3/../../../../lib/../include/w32api
+搜索列表结束。
+</code></pre>
+
+<p>搜索到了/usr/include目录，而且目录下有sys/types.h</p>
+
+<p>因此怀疑编译环境有问题，注意到make -v实际提示的</p>
+
+<pre><code>Built for x86_64-unknown-cygwin
+</code></pre>
+
+<p>x86后面跟的是unknown，而不是跟gcc-v一样的pc
+尝试装了32位版的cygwin和编译环境，make -v</p>
+
+<pre><code>Built for x86-pc-cygwin
+</code></pre>
+
+<p>提示正常了，但编译后依旧如此提示错误，考虑到编译后主要使用客户端，那就只好先把#include <netinet/tcp.h>的相关代码全部注释了，之后make正常，make install ，redis-cli可用</p>
+
+<p>然而</p>
+
+<pre><code>/usr/include/netinet/tcp.h:54:2: error: unknown type name ‘u_short’
+</code></pre>
+
+<p>这个提示在查找了很多资料都没找到解决办法，算是个遗憾。</p>
+
+			</div>
+
+			
+		</div>
+
+  </body>
+</html>

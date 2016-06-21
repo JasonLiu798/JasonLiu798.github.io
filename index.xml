@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>JasonLiu&#39;s Blog</title>
+    <link>http://JasonLiu798.github.io/</link>
+    <description>Recent content on JasonLiu&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-EN</language>
+    <managingEditor>jasondliu@foxmail.com (JasonLiu)</managingEditor>
+    <webMaster>jasondliu@foxmail.com (JasonLiu)</webMaster>
+    <copyright>(c) 2015 JasonLiu.</copyright>
+    <lastBuildDate>Sun, 05 Jun 2016 20:21:02 +0800</lastBuildDate>
+    <atom:link href="http://JasonLiu798.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>docker踩坑记</title>
+      <link>http://jasonliu798.github.io/blog/2016-06-05-docker%E8%B8%A9%E5%9D%91%E8%AE%B0/</link>
+      <pubDate>Sun, 05 Jun 2016 20:21:02 +0800</pubDate>
+      <author>jasondliu@foxmail.com (JasonLiu)</author>
+      <guid>http://jasonliu798.github.io/blog/2016-06-05-docker%E8%B8%A9%E5%9D%91%E8%AE%B0/</guid>
+      <description>&lt;p&gt;最近开始使用docker，一来是镜像开实例要比新建虚拟机要方便不少，二来docker发展的也相对成熟了，有了docker-toolbox这种一键安装包，docker-hub在国内也有各种各种镜像库了，资源获取比刚出来那阵要方便多了。不过坑还是不少，此总结下。&lt;/p&gt;
+
+&lt;p&gt;#安装&lt;br /&gt;
+安装推荐使用docker-toolbox，由于前面使用vagrant已经安装了virtual box，就不需要安装了，没有的话可以到oracle官网下载。&lt;/p&gt;
+
+&lt;p&gt;#镜像&lt;br /&gt;
+##找镜像&lt;br /&gt;
+docker镜像在docker-hub可以下到，不过速度较慢，推荐国内几个两个资源
+&lt;a href=&#34;https://dev.aliyun.com/search.html&#34;&gt;阿里hub&lt;/a&gt;
+&lt;a href=&#34;http://get.daocloud.io/&#34;&gt;daocloud&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;##docker pull stuck&lt;br /&gt;
+docker pull了一半，由于有其他事，机器暂时待机了，唤醒机器后，docker pull就卡着不动了。
+检查网络没有任何，等了几分钟左右，进度没有任何变化，只好强制中断。再次docker pull同一个镜像，下载进度还是从刚下载的地方开始，进度没有任何改变。&lt;/p&gt;
+
+&lt;p&gt;没办法，只能想办法把下了一半的镜像，找到手动删除（固态硬盘的空间还是很宝贵的，一个镜像占掉了近1个G）。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;&amp;gt;docker info
+/mnt/sda1/var/lib/docker
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;可以找到docker主目录/var/lib/docker/，下好镜像存放在/var/lib/docker/image里，但没有刚下了一半的镜像。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker@default:/mnt/sda1/var/lib/docker$ sudo ls
+aufs        containers  image       network     tmp         trust       volumes
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;ls下tmp目录，目录大小跟刚下载一半的镜像大小一样，可见下一半的东西就在这了，删除了此目录
+继续docker pull，仍然没法继续下载，应该在某个地方还有下载缓存，最后一招，重启docker-machine&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker-machine restart
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;再次尝试docker pull，终于开始重头下载了。&lt;/p&gt;
+
+&lt;p&gt;##Error checking TLS connection: Error checking and/or regenerating the certs&lt;br /&gt;
+由于docker-machine的ip是动态分配的，重启过一两次后，可能会分配一个不同的IP，需要重新生成证书才能ssh登录docker-machine。
+还一种解决方法就是设个固定IP，下面讲下如何配固定IP。&lt;/p&gt;
+
+&lt;p&gt;##docker-machine 设置静态IP&lt;br /&gt;
+docker-machine的linux版本是Core Linux，不是发行版，没法直接配静态IP。查看机器进程后，发现默认是通过udhcpc获取一个动态IP，重启后，有可能获取到不一样的IP。&lt;/p&gt;
+
+&lt;p&gt;虽然可以通过&lt;code&gt;docker-machine env default&lt;/code&gt;，获取到$DOCKER_HOST，但在需要固定IP的场合，还是比较麻烦。
+搜集资料后发现，docker-machine没有固定IP这个已经在github上提过一个issue，目前还没有修复，评论里有种方法测试可行：
+在/var/lib/boot2docker目录新建bootsync.sh，文件内设定固定IP&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ifconfig eth1 192.168.99.150 netmask 255.255.255.0 broadcast 192.168.99.255 up
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;但是此方法设定的IP在机器启动每20分钟左右，就会被后台启动的dhcp client重新获取一次IP，IP被设置成了新IP。&lt;/p&gt;
+
+&lt;p&gt;目前，临时解决方案有两种：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;把dhcp client关掉，dhcp client启动脚本可以在启动目录/etc/rc.d 找到，文件名dhcp.sh&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;if [ $DEVICE = &amp;quot;eth1&amp;quot; ]; then
+ ifconfig eth1 192.168.99.150 netmask 255.255.255.0 broadcast 192.168.99.255 up
+else
+...
+fi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;在文件内的for循环加了个判断条件，如果是eth1网卡，则设定固定IP，else 其他网卡默认还通过dhcp获取IP&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;不需要关闭dhcp client的方法，写个计划任务，1分钟重新设定一次IP&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;*/1 * * * * ifconfig eth1 192.168.99.150 netmask 255.255.255.0 broadcast 192.168.99.255 up
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>发版那些事</title>
+      <link>http://jasonliu798.github.io/blog/2016-05-13-%E5%8F%91%E7%89%88%E9%82%A3%E4%BA%9B%E4%BA%8B/</link>
+      <pubDate>Fri, 13 May 2016 23:22:21 +0800</pubDate>
+      <author>jasondliu@foxmail.com (JasonLiu)</author>
+      <guid>http://jasonliu798.github.io/blog/2016-05-13-%E5%8F%91%E7%89%88%E9%82%A3%E4%BA%9B%E4%BA%8B/</guid>
+      <description>&lt;p&gt;随着公司业务需求不断增长，发布也是越来越频繁，周一到周五，各种发布不停，本来计划下午就能上线的，缺因为各种原因拖到晚上，甚至第二天凌晨，总结以下原因大概有以下这些。&lt;/p&gt;
+
+&lt;p&gt;需求方面：
+    需求方面管理不足，产品在列出需求后，直接和具体的业务线开发程序员沟通，而没有更高一层的人员进行全局把控，导致出现以下问题：
+    + 一个需求本可以使用已有接口，却进行了重复开发
+    + 一个需求使用了已有接口，但是这个接口是用于已有业务场景，性能功能方面可能考虑不全，功能方面可能不能覆盖所有场景
+    + 本应进行拆分的接口，却还在原有接口上进行开发，导致接口职责不再单一，耦合度剧增
+    + 开发人员擅自接了一些看似简单的短时间能完成的需求，一来增加了发布次数，二来由于业务耦合度高，可能造成系统其它方面出现问题
+技术方面：
+    + 由于系统使用RPC调用，业务之间强依赖，一旦一个节点发布出现问题，会直接影响到一片业务，而且不好排查到源头
+    + 预发布和发布过程中发现的问题，及时排查修复后，没有经过测试验证，便上线，可能会由于短时间内精神紧张或考虑不周，导致出现更多bug&lt;/p&gt;
+
+&lt;p&gt;最终，公司出台了这么几条规定来解决以上问题：
++ 最直接的，就是控制发布时间，发布时间改为周二周四，常规火车发布
++ 剩下的时间，除非为紧急发布，即出现线上bug，且影响程度到达high级别，必须经过各部门总监审批后，才能发布
++ medium、low级别线上bug跟随周二周四火车发布修复，其他需求类发布一律禁止
++ 发版当天，控制时间在晚上8:00之前必须发布完成，如未完成的，顺延到下一个发布日上线
++ 新需求，不管难易大小，必须经过与BA（业务架构师）的沟通后，方可进行开发，保证业务可控，接口范围明确，需求与接口关系明确。
++ 技术难点、流量较大接口，开发前需要经过技术架构师评审，开发完成后，需要其进行code review，保证代码质量
++ 发版后，排查出的bug，不管解决难易，必须经过测试再次验证后方可上线，如果超过8:00，必须回滚，顺延下一发版日上线&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>防火墙的坑</title>
+      <link>http://jasonliu798.github.io/blog/2016-03-20-%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E5%9D%91/</link>
+      <pubDate>Sun, 20 Mar 2016 20:01:15 +0800</pubDate>
+      <author>jasondliu@foxmail.com (JasonLiu)</author>
+      <guid>http://jasonliu798.github.io/blog/2016-03-20-%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E5%9D%91/</guid>
+      <description>&lt;p&gt;周末晚上，正在家里辐射4玩着正爽，网站突然挂站，前台502，赶忙登服务器，排查原因。
+网站架构是php通过socket，hessian协议调用，java写的一个proxy，通过hessian协议把php解析为java object，通过dubbo client rpc调用dubbo服务。
+排查后台的dubbo服务并未发现异常，但是日志刷新速度貌似比平常要慢一点。
+经运维重启php，dubbo服务后，暂时缓解了问题，不到1个小时，前台再次502。
+然后，开始排查各种日志，无奈本业务线的一个bug由于暂时未解决撞到枪口，虽然跟本次挂站无任何联系，也被叫到公司去改bug，无比蛋疼。
+根据Zabbix监控，发现proxy的流量先是有锯齿状抖动，然后流量锯齿状下跌到0，重启完服务后，连接数锯齿状抖动，TCP连接图中tcp.ESTAB情况类似，tcp.CLOSING却是一条流量很低的横线。
+但据运维检查网络并未发现问题。
+之后持续了半小时，流量突然恢复正常，原来运维把iptables关了，排查发现有人在8点通过主控机，执行了开启iptables的脚步，使用了默认设置，路由表的数量超过65535，拒绝数据传输。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>redis开发札记</title>
+      <link>http://jasonliu798.github.io/blog/2016-03-20-redis%E5%BC%80%E5%8F%91%E6%9C%AD%E8%AE%B0/</link>
+      <pubDate>Sun, 20 Mar 2016 17:54:21 +0800</pubDate>
+      <author>jasondliu@foxmail.com (JasonLiu)</author>
+      <guid>http://jasonliu798.github.io/blog/2016-03-20-redis%E5%BC%80%E5%8F%91%E6%9C%AD%E8%AE%B0/</guid>
+      <description>&lt;p&gt;由于公司收藏功能全部使用redis存储数据，数据库冷备，redis流量不断增加，最后经过技术选型，使用twemproxy增加redis分片，容纳更多流量。
+然而在开发中出现一些问题&lt;/p&gt;
+
+&lt;p&gt;#hashtag&lt;br /&gt;
+首先是开发中用到了redis的有序数组，即zset，并且使用到其中一条命令ZUNIONSTORE，在测试环境的单机系统中功能正常，但是线上环境twemproxy中功能却不能正常使用，数据异常，不得不紧急回滚。
+查询twemproxy的&lt;a href=&#34;https://github.com/twitter/twemproxy/blob/master/notes/redis.md&#34;&gt;Redis Command Support&lt;/a&gt;，支持的命令包含ZUNIONSTORE，但下面包含一行小字&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ZINTERSTORE and ZUNIONSTORE support requires that the supplied keys hash to the same server. You can ensure this by using the same hashtag for all keys in the command. Twemproxy does no checking on its end to verify that all the keys hash to the same server, and the given command is forwarded to the server that the first key hashes to.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;zset的命令中，不光是ZUNIONSTORE，ZINTERSTORE也需要将key hash到同一分片服务器，才能保证结果正常。
+这里的hash需要key使用&lt;a href=&#34;https://github.com/twitter/twemproxy/blob/master/notes/recommendation.md#hash-tags&#34;&gt;hashtag&lt;/a&gt;，即在key中添加{}，默认情况下，twemproxy会使用整个key来计算哈希；如果存在{}，twemproxy只使用{}内的数据，计算hash值。
+如果不想改动key，而且数据量较小，也可以手动zrange出两个zset再zadd到目的key，不过这个操作的流量、CPU开销，就是zeunion的几倍了。&lt;/p&gt;
+
+&lt;p&gt;此文档特殊备注的还有以下几个命令：&lt;br /&gt;
+* &lt;code&gt;MSET support is not Atomic&lt;/code&gt; mset操作不是原子的&lt;br /&gt;
+* &lt;code&gt;RPOPLPUSH, SIDFF, SDIFFSTORE, SINTER, SINTERSTORE, SMOVE, SUNION, SUNIONSTORE, PFMERGE&lt;/code&gt;同样要求，源key和目标key，使用hashtag，hash到同一台服务器&lt;br /&gt;
+* &lt;code&gt;EVAL&lt;/code&gt;使用多个key时，要求同上&lt;/p&gt;
+
+&lt;p&gt;#pipeline优化&lt;/p&gt;
+
+&lt;p&gt;#连接获取超时&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>关于炉石传说6回合抽到杰克逊的概率</title>
+      <link>http://jasonliu798.github.io/blog/2015-11-14-%E5%85%B3%E4%BA%8E%E7%82%89%E7%9F%B3%E4%BC%A0%E8%AF%B46%E5%9B%9E%E5%90%88%E6%8A%BD%E5%88%B0%E6%9D%B0%E5%85%8B%E9%80%8A%E7%9A%84%E6%A6%82%E7%8E%87/</link>
+      <pubDate>Sat, 14 Nov 2015 19:59:21 +0800</pubDate>
+      <author>jasondliu@foxmail.com (JasonLiu)</author>
+      <guid>http://jasonliu798.github.io/blog/2015-11-14-%E5%85%B3%E4%BA%8E%E7%82%89%E7%9F%B3%E4%BC%A0%E8%AF%B46%E5%9B%9E%E5%90%88%E6%8A%BD%E5%88%B0%E6%9D%B0%E5%85%8B%E9%80%8A%E7%9A%84%E6%A6%82%E7%8E%87/</guid>
+      <description>&lt;p&gt;炉石新冒险模式出了张新卡杰克逊，只要牌库没相同的牌就直接满血原地复活，效果很是逆天，但是限制也比较大，有些牌不带两张还是比较亏，最适合组这卡组的应该算是术士了，强大得过牌能力，只要不死，6回合满血复活，那现在最主要的问题就是6回合抽到的概率有多大，便顺手计算了下&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://JasonLiu798.github.io/image/game/jackson.jpg&#34; alt=&#34;杰克逊&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;如果直接按每回合直接计算最后加起来，其实是很麻烦的，这里我们可以把这张牌插入牌堆，在牌堆中的任意位置得概率都是1/30，在前/后15张的概率是50%，这样只需要计算下6回合一共能过牌多少张就知道，抽到此牌的概率了。&lt;/p&gt;
+
+&lt;p&gt;先看下不带抽牌随从的概率，假设后手4张，全部换掉，过8张，1~6回合，每回合抽一张，过6张，从第二回合开始，不管场面每回合2费2血抽一张，过5张，一共19张，过了近2/3的牌，抽到概率为63.33%；
+先手3张，全部换掉，过6张，1~6回合同上，抽牌加血换牌共11张，过牌17张， 抽到概率56.67%；
+理论情况下抽到的平均概率60%。&lt;/p&gt;
+
+&lt;p&gt;实战情况下，也不能没随从站场，解场，如果要站场，术士1费可以上虚空、小鬼、马云、持盾卫士等站场+拖延时间，这类随从大概有4~5个左右，起手15%左右机会抽到1费，有的话那张不换，没有低费则全换牌。第一回合上1费，第二回合抽牌，3~6回合按一半的回合能上随从且能抽牌，少过2张。&lt;/p&gt;
+
+&lt;p&gt;那么先看先手，15%机会只换两张，85%机会全都换，即过15%x5+85%x6=5.85，剩下过9张，那么一共过牌14.85张，抽到概率49.5%；
+后手15%机会只换3张，85%全换，即过15%x7+85%x8=7.85，剩下同上共16.85张，抽到概率56.16%；
+更贴合实战平均下来概率为52.83%。&lt;/p&gt;
+
+&lt;p&gt;为了更快的过牌，还可以带上各种抽牌随从各带一张，比如战利品收藏者2费过1张、爆牌鱼2费过2张、死亡缠绕1费过1张（但需要条件触发暂时不算）、痛苦侍僧3费过1~3张（术士自残随从但又不搞死随从的技能不多，至少抽1张，遇到攻击小于3随从能抽2到3张，具体概率还需要参考随从库的随从攻击统计，这里简单算为过1.5张）、血法师2费过1张、蓝龙5费过1张，由于本身占费用，算1~6中两个下随从回合下抽牌随从至少可以用一张，共5张只抽到1张平均过1x20%+2x20%+1.5x20%+1x20%+1x20%=1.3张牌。&lt;/p&gt;
+
+&lt;p&gt;30张牌6回合过牌按上面整体平均15张算，抽到到5张中任意一张牌的概率需要公式计算下，由于概率忘差不多了，大概估算下，抽一张特定牌的概率都为50%左右（即上面得计算过程），所以抽5张中任意一张这个概率应该至少在80%以上，所以可以增加至少1张左右过牌。&lt;/p&gt;
+
+&lt;p&gt;这样算下来，6回合抽到雷诺的概率至少是45%起步的，值得一用，同时也可以看出某些比较重要的牌带两张也是没有问题的。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>IDEA的一些坑(持续更新)</title>
+      <link>http://jasonliu798.github.io/blog/2015-10-28-IDEA%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/</link>
+      <pubDate>Wed, 28 Oct 2015 11:32:01 +0800</pubDate>
+      <author>jasondliu@foxmail.com (JasonLiu)</author>
+      <guid>http://jasonliu798.github.io/blog/2015-10-28-IDEA%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/</guid>
+      <description>&lt;p&gt;#IDEA乱码问题
+转为IDEA后，被这个乱码问题困扰了两天，最终解决了，写个文总结下。
+我们的项目全部使用UTF-8，先出现的问题是新建文件不是UTF-8，先修改如下配置后正常
+&lt;code&gt;File-&amp;gt;settings-&amp;gt;Editor-&amp;gt;File Encoding&lt;/code&gt;
+将Project Encoding、IDE Encoding都改为UTF-8后，新建文件就是UTF-8了，文件编码可以在状态栏看到。如果以前用其他编码编写的代码会出现乱码，写个程序转下就好。&lt;/p&gt;
+
+&lt;p&gt;但改完后，控制台显示依旧是乱码，尝试修改编译器配置，如下：
+&lt;code&gt;Settings-&amp;gt;Build,Execution,Deployment-&amp;gt;Compiler-&amp;gt;Additional build process VM options:&lt;/code&gt;
+增加了-Dfile.encoding=UTF-8，仍然无效。
+然后尝试在Maven选项中增加-Dfile.encoding=UTF-8，仍然无效。&lt;/p&gt;
+
+&lt;p&gt;后查到&lt;a href=&#34;http://www.iteye.com/topic/1131087&#34;&gt;关于Idea testng单元测试乱码的解决&lt;/a&gt;，还可以更改idea的启动VM参数：
+&lt;code&gt;IEDA安装目录\bin&lt;/code&gt;下编辑idea.exe.vmoptions，增加一行-Dfile.encoding=UTF-8，依旧无效。
+网上搜了很多资料，还是改上面那些东西，没啥新发现。
+突然看到前文中的为-Dfile.encoding=UTF8，UTF-8编码实际写的UTF8，中间没有短横杠，赶紧修改，重启IDEA，控制台终于显示正常。&lt;/p&gt;
+
+&lt;p&gt;但执行下面两行后，输出都为UTF-8带短横杆的，对idea.exe.vmoptions里为何不识别带横杠的UTF-8很费解
+&lt;code&gt;System.out.println(String.format(&amp;quot;file.encoding: %s&amp;quot;, System.getProperty(&amp;quot;file.encoding&amp;quot;)));
+   System.out.println(String.format(&amp;quot;defaultCharset: %s&amp;quot;, Charset.defaultCharset().name()));
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;#IDEA特殊字符不可见问题
+某次将某些代码临时拷贝到mac自带便签工具，拷贝回来后，代码突然报错，由于中间还编辑了一些其他代码，仔细检查后并未发现语法错误，但IDEA一直提示unexpected token。
+怀疑是不可见字符引起，于是把代码发送至同事windows系统下的eclipse下，不可见字符终于显现出来真身了，一个方框，里面一个问号。
+解决方法：plugin中可以搜到一个插件&lt;code&gt;Zero width characters locator&lt;/code&gt;，不过安装后依旧不能让不可见字符显现。
+临时解决办法：侧边栏滚动条 的语法检查错误提示浮动窗口里，可以查看到哪有不可见字符，按指示删除即可。&lt;/p&gt;
+
+&lt;p&gt;#IDEA缓存问题
+有时IDEA运行过久、项目开过多、手动添加修改一些配置，新导入的或者更换过依赖的项目会出现jdk不识别、maven的pom.xml检查多遍是正确的，但是仍然有些类无法被识别等错误。
+这时候可能是IDEA缓存出现问题，可以强制删除缓存，点击如下选项：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;File-&amp;gt;Invalidate Caches/Restart...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;#源码文件语法错误不提示，编译后才提示
+需要打开自动编译选项，具体位置：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;File-&amp;gt;Other Settings-&amp;gt;Default Settings-&amp;gt;
+Build,Execution,Deployment-&amp;gt;Compiler-&amp;gt;勾选 Make project automatically
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Power Save Mode打开时，即使设置了以上选项，仍然不会提示语法错误。&lt;/p&gt;
+
+&lt;p&gt;#git或svn等源码控制软件，更新源码后，同文件内容不同步，仍然为旧内容
+IDEA运行一段时间后，如果机器内存较小，运行缓慢，或者打开项目过多，会出现以上情况。
+可以手动同步下磁盘文件，选项在&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;File-&amp;gt;Synchronize
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;点击后，强制同步磁盘文件&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>cygwin编译redis</title>
+      <link>http://jasonliu798.github.io/blog/2015-09-27-cygwin%E7%BC%96%E8%AF%91redis/</link>
+      <pubDate>Sun, 27 Sep 2015 12:55:10 +0800</pubDate>
+      <author>jasondliu@foxmail.com (JasonLiu)</author>
+      <guid>http://jasonliu798.github.io/blog/2015-09-27-cygwin%E7%BC%96%E8%AF%91redis/</guid>
+      <description>&lt;p&gt;由于经常使用cygwin，windows上又没有命令行版的redis客户端，因此准备编译一个，没想到遇到一个恶心问题。&lt;/p&gt;
+
+&lt;p&gt;先到官网下了源码&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;wget https://github.com/antirez/redis/archive/2.8.22.tar.gz
+tar -zpxvf redis-2.8.22.tar.gz
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;cygwin需要安装gcc和make，使用setup.exe安装，安完后的环境&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ gcc -v
+COLLECT_GCC=gcc
+COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-cygwin/4.9.3/lto-wrapper.exe
+目标：x86_64-pc-cygwin
+
+$ make -v
+GNU Make 4.1
+Built for x86_64-unknown-cygwin
+Copyright (C) 1988-2014 Free Software Foundation, Inc.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;编译需要修改几个源文件，参考&lt;a href=&#34;http://my.oschina.net/maxid/blog/186506&#34;&gt;Windows 7 64位下编译Redis-2.8.3/Redis-3.0.1&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;src/redis.h修改
+/* Cygwin Fix */   
+#ifdef __CYGWIN__   
+#ifndef SA_ONSTACK   
+#define SA_ONSTACK 0x08000000   
+#endif   
+#endif
+/deps/hiredis/net.c 在 #include &amp;quot;sds.h&amp;quot;后增加以下代码
+/* Cygwin Fix */   
+#ifdef __CYGWIN__
+#define TCP_KEEPCNT 8
+#define TCP_KEEPINTVL 150
+#define TCP_KEEPIDLE 14400
+#endif
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;开始编译&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd deps
+$ make lua hiredis linenoise
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;问题来了，提示了一堆类型找不到&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/usr/include/netinet/tcp.h:54:2: error: unknown type name ‘u_short’
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;查看编译提示得知hiredis/net.c中include了&lt;netinet/tcp.h&gt;，tcp.h中需要u_short这些类型，这些类型都是定义在&lt;sys/types.h&gt;头文件中，检查代码并没有缺少include &lt;sys/types.h&gt;，使用gcc -v deps/hiredis/net.c，查看头文件搜索目录&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#include &amp;quot;...&amp;quot; 搜索从这里开始：
+#include &amp;lt;...&amp;gt; 搜索从这里开始：
+ /usr/lib/gcc/x86_64-pc-cygwin/4.9.3/include
+ /usr/lib/gcc/x86_64-pc-cygwin/4.9.3/include-fixed
+ /usr/include
+ /usr/lib/gcc/x86_64-pc-cygwin/4.9.3/../../../../lib/../include/w32api
+搜索列表结束。
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;搜索到了/usr/include目录，而且目录下有sys/types.h&lt;/p&gt;
+
+&lt;p&gt;因此怀疑编译环境有问题，注意到make -v实际提示的&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Built for x86_64-unknown-cygwin
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;x86后面跟的是unknown，而不是跟gcc-v一样的pc
+尝试装了32位版的cygwin和编译环境，make -v&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Built for x86-pc-cygwin
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;提示正常了，但编译后依旧如此提示错误，考虑到编译后主要使用客户端，那就只好先把#include &lt;netinet/tcp.h&gt;的相关代码全部注释了，之后make正常，make install ，redis-cli可用&lt;/p&gt;
+
+&lt;p&gt;然而&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/usr/include/netinet/tcp.h:54:2: error: unknown type name ‘u_short’
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这个提示在查找了很多资料都没找到解决办法，算是个遗憾。&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

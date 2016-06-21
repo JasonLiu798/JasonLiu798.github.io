@@ -1,0 +1,122 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-EN" lang="en-EN">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.15" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> IDEA的一些坑(持续更新) &middot; JasonLiu&#39;s Blog </title>
+
+  
+  <link rel="stylesheet" href="http://jasonliu798.github.io/css/poole.css">
+  <link rel="stylesheet" href="http://jasonliu798.github.io/css/syntax.css">
+  <link rel="stylesheet" href="http://jasonliu798.github.io/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="JasonLiu&#39;s Blog" />
+</head>
+
+	<body class="">
+		<div class="sidebar">
+  <div class="container sidebar-sticky">
+
+    <div class="sidebar-about">
+      <a href="http://jasonliu798.github.io/"><h1>JasonLiu&#39;s Blog</h1></a>
+      <p class="lead">
+      An elegant open source and mobile first theme for <a href="http://hugo.spf13.com">hugo</a> made by <a href="http://twitter.com/mdo">@mdo</a>. Originally made for Jekyll.
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li><a href="/">Home</a> </li>
+      
+        <li><a href="/"> JasonLiu&#39;s Blog </a></li>
+      
+        <li><a href="https://www.google.com/search?q=andrew&#43;ridgeley"> The other guy from Wham! </a></li>
+      
+        <li><a href="https://www.github.com"> This theme - add link </a></li>
+      
+    </ul>
+
+    <p>&copy; 2016. All rights reserved. </p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>IDEA的一些坑(持续更新)</h1>
+			  <span class="post-date">Wed, Oct 28, 2015</span>
+
+				<ul>
+				
+				
+				</ul>
+
+			      <p>#IDEA乱码问题
+转为IDEA后，被这个乱码问题困扰了两天，最终解决了，写个文总结下。
+我们的项目全部使用UTF-8，先出现的问题是新建文件不是UTF-8，先修改如下配置后正常
+<code>File-&gt;settings-&gt;Editor-&gt;File Encoding</code>
+将Project Encoding、IDE Encoding都改为UTF-8后，新建文件就是UTF-8了，文件编码可以在状态栏看到。如果以前用其他编码编写的代码会出现乱码，写个程序转下就好。</p>
+
+<p>但改完后，控制台显示依旧是乱码，尝试修改编译器配置，如下：
+<code>Settings-&gt;Build,Execution,Deployment-&gt;Compiler-&gt;Additional build process VM options:</code>
+增加了-Dfile.encoding=UTF-8，仍然无效。
+然后尝试在Maven选项中增加-Dfile.encoding=UTF-8，仍然无效。</p>
+
+<p>后查到<a href="http://www.iteye.com/topic/1131087">关于Idea testng单元测试乱码的解决</a>，还可以更改idea的启动VM参数：
+<code>IEDA安装目录\bin</code>下编辑idea.exe.vmoptions，增加一行-Dfile.encoding=UTF-8，依旧无效。
+网上搜了很多资料，还是改上面那些东西，没啥新发现。
+突然看到前文中的为-Dfile.encoding=UTF8，UTF-8编码实际写的UTF8，中间没有短横杠，赶紧修改，重启IDEA，控制台终于显示正常。</p>
+
+<p>但执行下面两行后，输出都为UTF-8带短横杆的，对idea.exe.vmoptions里为何不识别带横杠的UTF-8很费解
+<code>System.out.println(String.format(&quot;file.encoding: %s&quot;, System.getProperty(&quot;file.encoding&quot;)));
+   System.out.println(String.format(&quot;defaultCharset: %s&quot;, Charset.defaultCharset().name()));
+</code></p>
+
+<p>#IDEA特殊字符不可见问题
+某次将某些代码临时拷贝到mac自带便签工具，拷贝回来后，代码突然报错，由于中间还编辑了一些其他代码，仔细检查后并未发现语法错误，但IDEA一直提示unexpected token。
+怀疑是不可见字符引起，于是把代码发送至同事windows系统下的eclipse下，不可见字符终于显现出来真身了，一个方框，里面一个问号。
+解决方法：plugin中可以搜到一个插件<code>Zero width characters locator</code>，不过安装后依旧不能让不可见字符显现。
+临时解决办法：侧边栏滚动条 的语法检查错误提示浮动窗口里，可以查看到哪有不可见字符，按指示删除即可。</p>
+
+<p>#IDEA缓存问题
+有时IDEA运行过久、项目开过多、手动添加修改一些配置，新导入的或者更换过依赖的项目会出现jdk不识别、maven的pom.xml检查多遍是正确的，但是仍然有些类无法被识别等错误。
+这时候可能是IDEA缓存出现问题，可以强制删除缓存，点击如下选项：</p>
+
+<pre><code>File-&gt;Invalidate Caches/Restart...
+</code></pre>
+
+<p>#源码文件语法错误不提示，编译后才提示
+需要打开自动编译选项，具体位置：</p>
+
+<pre><code>File-&gt;Other Settings-&gt;Default Settings-&gt;
+Build,Execution,Deployment-&gt;Compiler-&gt;勾选 Make project automatically
+</code></pre>
+
+<p>Power Save Mode打开时，即使设置了以上选项，仍然不会提示语法错误。</p>
+
+<p>#git或svn等源码控制软件，更新源码后，同文件内容不同步，仍然为旧内容
+IDEA运行一段时间后，如果机器内存较小，运行缓慢，或者打开项目过多，会出现以上情况。
+可以手动同步下磁盘文件，选项在</p>
+
+<pre><code>File-&gt;Synchronize
+</code></pre>
+
+<p>点击后，强制同步磁盘文件</p>
+
+			</div>
+
+			
+		</div>
+
+  </body>
+</html>
