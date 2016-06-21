@@ -32,10 +32,13 @@
 这里的hash需要key使用&lt;a href=&#34;https://github.com/twitter/twemproxy/blob/master/notes/recommendation.md#hash-tags&#34;&gt;hashtag&lt;/a&gt;，即在key中添加{}，默认情况下，twemproxy会使用整个key来计算哈希；如果存在{}，twemproxy只使用{}内的数据，计算hash值。
 如果不想改动key，而且数据量较小，也可以手动zrange出两个zset再zadd到目的key，不过这个操作的流量、CPU开销，就是zeunion的几倍了。&lt;/p&gt;
 
-&lt;p&gt;此文档特殊备注的还有以下几个命令：&lt;br /&gt;
-* &lt;code&gt;MSET support is not Atomic&lt;/code&gt; mset操作不是原子的&lt;br /&gt;
-* &lt;code&gt;RPOPLPUSH, SIDFF, SDIFFSTORE, SINTER, SINTERSTORE, SMOVE, SUNION, SUNIONSTORE, PFMERGE&lt;/code&gt;同样要求，源key和目标key，使用hashtag，hash到同一台服务器&lt;br /&gt;
-* &lt;code&gt;EVAL&lt;/code&gt;使用多个key时，要求同上&lt;/p&gt;
+&lt;p&gt;此文档特殊备注的还有以下几个命令：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;MSET support is not Atomic&lt;/code&gt; mset操作不是原子的&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;RPOPLPUSH, SIDFF, SDIFFSTORE, SINTER, SINTERSTORE, SMOVE, SUNION, SUNIONSTORE, PFMERGE&lt;/code&gt;同样要求，源key和目标key，使用hashtag，hash到同一台服务器&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;EVAL&lt;/code&gt;使用多个key时，要求同上&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;p&gt;#pipeline优化&lt;/p&gt;
 

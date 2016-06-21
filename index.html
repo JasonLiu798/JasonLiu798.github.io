@@ -150,23 +150,29 @@ fi
     <p>随着公司业务需求不断增长，发布也是越来越频繁，周一到周五，各种发布不停，本来计划下午就能上线的，缺因为各种原因拖到晚上，甚至第二天凌晨，总结以下原因大概有以下这些。</p>
 
 <p>需求方面：
-    需求方面管理不足，产品在列出需求后，直接和具体的业务线开发程序员沟通，而没有更高一层的人员进行全局把控，导致出现以下问题：
-    + 一个需求本可以使用已有接口，却进行了重复开发
-    + 一个需求使用了已有接口，但是这个接口是用于已有业务场景，性能功能方面可能考虑不全，功能方面可能不能覆盖所有场景
-    + 本应进行拆分的接口，却还在原有接口上进行开发，导致接口职责不再单一，耦合度剧增
-    + 开发人员擅自接了一些看似简单的短时间能完成的需求，一来增加了发布次数，二来由于业务耦合度高，可能造成系统其它方面出现问题
-技术方面：
-    + 由于系统使用RPC调用，业务之间强依赖，一旦一个节点发布出现问题，会直接影响到一片业务，而且不好排查到源头
-    + 预发布和发布过程中发现的问题，及时排查修复后，没有经过测试验证，便上线，可能会由于短时间内精神紧张或考虑不周，导致出现更多bug</p>
+    需求方面管理不足，产品在列出需求后，直接和具体的业务线开发程序员沟通，而没有更高一层的人员进行全局把控，导致出现以下问题：</p>
 
-<p>最终，公司出台了这么几条规定来解决以上问题：
-+ 最直接的，就是控制发布时间，发布时间改为周二周四，常规火车发布
-+ 剩下的时间，除非为紧急发布，即出现线上bug，且影响程度到达high级别，必须经过各部门总监审批后，才能发布
-+ medium、low级别线上bug跟随周二周四火车发布修复，其他需求类发布一律禁止
-+ 发版当天，控制时间在晚上8:00之前必须发布完成，如未完成的，顺延到下一个发布日上线
-+ 新需求，不管难易大小，必须经过与BA（业务架构师）的沟通后，方可进行开发，保证业务可控，接口范围明确，需求与接口关系明确。
-+ 技术难点、流量较大接口，开发前需要经过技术架构师评审，开发完成后，需要其进行code review，保证代码质量
-+ 发版后，排查出的bug，不管解决难易，必须经过测试再次验证后方可上线，如果超过8:00，必须回滚，顺延下一发版日上线</p>
+<ul>
+<li>一个需求本可以使用已有接口，却进行了重复开发</li>
+<li>一个需求使用了已有接口，但是这个接口是用于已有业务场景，性能功能方面可能考虑不全，功能方面可能不能覆盖所有场景</li>
+<li>本应进行拆分的接口，却还在原有接口上进行开发，导致接口职责不再单一，耦合度剧增</li>
+<li>开发人员擅自接了一些看似简单的短时间能完成的需求，一来增加了发布次数，二来由于业务耦合度高，可能造成系统其它方面出现问题
+技术方面：</li>
+<li>由于系统使用RPC调用，业务之间强依赖，一旦一个节点发布出现问题，会直接影响到一片业务，而且不好排查到源头</li>
+<li>预发布和发布过程中发现的问题，及时排查修复后，没有经过测试验证，便上线，可能会由于短时间内精神紧张或考虑不周，导致出现更多bug</li>
+</ul>
+
+<p>最终，公司出台了这么几条规定来解决以上问题：</p>
+
+<ul>
+<li>最直接的，就是控制发布时间，发布时间改为周二周四，常规火车发布</li>
+<li>剩下的时间，除非为紧急发布，即出现线上bug，且影响程度到达high级别，必须经过各部门总监审批后，才能发布</li>
+<li>medium、low级别线上bug跟随周二周四火车发布修复，其他需求类发布一律禁止</li>
+<li>发版当天，控制时间在晚上8:00之前必须发布完成，如未完成的，顺延到下一个发布日上线</li>
+<li>新需求，不管难易大小，必须经过与BA（业务架构师）的沟通后，方可进行开发，保证业务可控，接口范围明确，需求与接口关系明确。</li>
+<li>技术难点、流量较大接口，开发前需要经过技术架构师评审，开发完成后，需要其进行code review，保证代码质量</li>
+<li>发版后，排查出的bug，不管解决难易，必须经过测试再次验证后方可上线，如果超过8:00，必须回滚，顺延下一发版日上线</li>
+</ul>
 
   </div>
   
@@ -179,14 +185,17 @@ fi
 
     <span class="post-date">Sun, Mar 20, 2016</span>
 
-    <p>周末晚上，正在家里辐射4玩着正爽，网站突然挂站，前台502，赶忙登服务器，排查原因。
-网站架构是php通过socket，hessian协议调用，java写的一个proxy，通过hessian协议把php解析为java object，通过dubbo client rpc调用dubbo服务。
-排查后台的dubbo服务并未发现异常，但是日志刷新速度貌似比平常要慢一点。
-经运维重启php，dubbo服务后，暂时缓解了问题，不到1个小时，前台再次502。
-然后，开始排查各种日志，无奈本业务线的一个bug由于暂时未解决撞到枪口，虽然跟本次挂站无任何联系，也被叫到公司去改bug，无比蛋疼。
-根据Zabbix监控，发现proxy的流量先是有锯齿状抖动，然后流量锯齿状下跌到0，重启完服务后，连接数锯齿状抖动，TCP连接图中tcp.ESTAB情况类似，tcp.CLOSING却是一条流量很低的横线。
-但据运维检查网络并未发现问题。
-之后持续了半小时，流量突然恢复正常，原来运维把iptables关了，排查发现有人在8点通过主控机，执行了开启iptables的脚步，使用了默认设置，路由表的数量超过65535，拒绝数据传输。</p>
+    <p>周末晚上，正在家里辐射4玩着正爽，网站突然挂站，前台502，赶忙登服务器，排查原因。</p>
+
+<p>网站架构是php通过socket，hessian协议调用，java写的一个proxy，通过hessian协议把php解析为java object，通过dubbo client rpc调用dubbo服务。
+排查后台的dubbo服务并未发现异常，但是日志刷新速度貌似比平常要慢一点。</p>
+
+<p>经运维重启php，dubbo服务后，暂时缓解了问题，不到1个小时，前台再次502。
+然后，开始排查各种日志，无奈本业务线的一个bug由于暂时未解决撞到枪口，虽然跟本次挂站无任何联系，也被叫到公司去改bug，无比蛋疼。</p>
+
+<p>根据Zabbix监控，发现proxy的流量先是有锯齿状抖动，然后流量锯齿状下跌到0，重启完服务后，连接数锯齿状抖动，TCP连接图中tcp.ESTAB情况类似，tcp.CLOSING却是一条流量很低的横线。但据运维检查网络并未发现问题。</p>
+
+<p>之后持续了半小时，流量突然恢复正常，原来运维把iptables关了，排查发现有人在8点通过主控机，执行了开启iptables的脚本，使用了默认设置，路由表的数量超过65535，拒绝数据传输。</p>
 
   </div>
   
@@ -213,10 +222,13 @@ fi
 这里的hash需要key使用<a href="https://github.com/twitter/twemproxy/blob/master/notes/recommendation.md#hash-tags">hashtag</a>，即在key中添加{}，默认情况下，twemproxy会使用整个key来计算哈希；如果存在{}，twemproxy只使用{}内的数据，计算hash值。
 如果不想改动key，而且数据量较小，也可以手动zrange出两个zset再zadd到目的key，不过这个操作的流量、CPU开销，就是zeunion的几倍了。</p>
 
-<p>此文档特殊备注的还有以下几个命令：<br />
-* <code>MSET support is not Atomic</code> mset操作不是原子的<br />
-* <code>RPOPLPUSH, SIDFF, SDIFFSTORE, SINTER, SINTERSTORE, SMOVE, SUNION, SUNIONSTORE, PFMERGE</code>同样要求，源key和目标key，使用hashtag，hash到同一台服务器<br />
-* <code>EVAL</code>使用多个key时，要求同上</p>
+<p>此文档特殊备注的还有以下几个命令：</p>
+
+<ul>
+<li><code>MSET support is not Atomic</code> mset操作不是原子的</li>
+<li><code>RPOPLPUSH, SIDFF, SDIFFSTORE, SINTER, SINTERSTORE, SMOVE, SUNION, SUNIONSTORE, PFMERGE</code>同样要求，源key和目标key，使用hashtag，hash到同一台服务器</li>
+<li><code>EVAL</code>使用多个key时，要求同上</li>
+</ul>
 
 <p>#pipeline优化</p>
 
@@ -266,15 +278,18 @@ fi
 
     <span class="post-date">Wed, Oct 28, 2015</span>
 
-    <p>#IDEA乱码问题
+    <p>#IDEA乱码问题<br />
 转为IDEA后，被这个乱码问题困扰了两天，最终解决了，写个文总结下。
 我们的项目全部使用UTF-8，先出现的问题是新建文件不是UTF-8，先修改如下配置后正常
 <code>File-&gt;settings-&gt;Editor-&gt;File Encoding</code>
 将Project Encoding、IDE Encoding都改为UTF-8后，新建文件就是UTF-8了，文件编码可以在状态栏看到。如果以前用其他编码编写的代码会出现乱码，写个程序转下就好。</p>
 
-<p>但改完后，控制台显示依旧是乱码，尝试修改编译器配置，如下：
-<code>Settings-&gt;Build,Execution,Deployment-&gt;Compiler-&gt;Additional build process VM options:</code>
-增加了-Dfile.encoding=UTF-8，仍然无效。
+<p>但改完后，控制台显示依旧是乱码，尝试修改编译器配置，如下：</p>
+
+<pre><code>Settings-&gt;Build,Execution,Deployment-&gt;Compiler-&gt;Additional build process VM options:
+</code></pre>
+
+<p>增加了-Dfile.encoding=UTF-8，仍然无效。
 然后尝试在Maven选项中增加-Dfile.encoding=UTF-8，仍然无效。</p>
 
 <p>后查到<a href="http://www.iteye.com/topic/1131087">关于Idea testng单元测试乱码的解决</a>，还可以更改idea的启动VM参数：
@@ -282,25 +297,27 @@ fi
 网上搜了很多资料，还是改上面那些东西，没啥新发现。
 突然看到前文中的为-Dfile.encoding=UTF8，UTF-8编码实际写的UTF8，中间没有短横杠，赶紧修改，重启IDEA，控制台终于显示正常。</p>
 
-<p>但执行下面两行后，输出都为UTF-8带短横杆的，对idea.exe.vmoptions里为何不识别带横杠的UTF-8很费解
-<code>System.out.println(String.format(&quot;file.encoding: %s&quot;, System.getProperty(&quot;file.encoding&quot;)));
-   System.out.println(String.format(&quot;defaultCharset: %s&quot;, Charset.defaultCharset().name()));
-</code></p>
+<p>但执行下面两行后，输出都为UTF-8带短横杆的，对idea.exe.vmoptions里为何不识别带横杠的UTF-8很费解</p>
 
-<p>#IDEA特殊字符不可见问题
+<pre><code class="language-java">System.out.println(String.format(&quot;file.encoding: %s&quot;, System.getProperty(&quot;file.encoding&quot;)));
+System.out.println(String.format(&quot;defaultCharset: %s&quot;, Charset.defaultCharset().name()));
+</code></pre>
+
+<p>#IDEA特殊字符不可见问题<br />
 某次将某些代码临时拷贝到mac自带便签工具，拷贝回来后，代码突然报错，由于中间还编辑了一些其他代码，仔细检查后并未发现语法错误，但IDEA一直提示unexpected token。
-怀疑是不可见字符引起，于是把代码发送至同事windows系统下的eclipse下，不可见字符终于显现出来真身了，一个方框，里面一个问号。
-解决方法：plugin中可以搜到一个插件<code>Zero width characters locator</code>，不过安装后依旧不能让不可见字符显现。
+怀疑是不可见字符引起，于是把代码发送至同事windows系统下的eclipse下，不可见字符终于显现出来真身了，一个方框，里面一个问号。</p>
+
+<p>解决方法：plugin中可以搜到一个插件<code>Zero width characters locator</code>，不过安装后依旧不能让不可见字符显现。
 临时解决办法：侧边栏滚动条 的语法检查错误提示浮动窗口里，可以查看到哪有不可见字符，按指示删除即可。</p>
 
-<p>#IDEA缓存问题
+<p>#IDEA缓存问题<br />
 有时IDEA运行过久、项目开过多、手动添加修改一些配置，新导入的或者更换过依赖的项目会出现jdk不识别、maven的pom.xml检查多遍是正确的，但是仍然有些类无法被识别等错误。
 这时候可能是IDEA缓存出现问题，可以强制删除缓存，点击如下选项：</p>
 
 <pre><code>File-&gt;Invalidate Caches/Restart...
 </code></pre>
 
-<p>#源码文件语法错误不提示，编译后才提示
+<p>#源码文件语法错误不提示，编译后才提示语法错误<br />
 需要打开自动编译选项，具体位置：</p>
 
 <pre><code>File-&gt;Other Settings-&gt;Default Settings-&gt;
@@ -309,7 +326,7 @@ Build,Execution,Deployment-&gt;Compiler-&gt;勾选 Make project automatically
 
 <p>Power Save Mode打开时，即使设置了以上选项，仍然不会提示语法错误。</p>
 
-<p>#git或svn等源码控制软件，更新源码后，同文件内容不同步，仍然为旧内容
+<p>#git或svn等源码控制软件，更新源码后，同文件内容不同步，仍然为旧内容<br />
 IDEA运行一段时间后，如果机器内存较小，运行缓慢，或者打开项目过多，会出现以上情况。
 可以手动同步下磁盘文件，选项在</p>
 

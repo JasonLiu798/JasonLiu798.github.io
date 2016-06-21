@@ -100,23 +100,29 @@ fi
       <description>&lt;p&gt;随着公司业务需求不断增长，发布也是越来越频繁，周一到周五，各种发布不停，本来计划下午就能上线的，缺因为各种原因拖到晚上，甚至第二天凌晨，总结以下原因大概有以下这些。&lt;/p&gt;
 
 &lt;p&gt;需求方面：
-    需求方面管理不足，产品在列出需求后，直接和具体的业务线开发程序员沟通，而没有更高一层的人员进行全局把控，导致出现以下问题：
-    + 一个需求本可以使用已有接口，却进行了重复开发
-    + 一个需求使用了已有接口，但是这个接口是用于已有业务场景，性能功能方面可能考虑不全，功能方面可能不能覆盖所有场景
-    + 本应进行拆分的接口，却还在原有接口上进行开发，导致接口职责不再单一，耦合度剧增
-    + 开发人员擅自接了一些看似简单的短时间能完成的需求，一来增加了发布次数，二来由于业务耦合度高，可能造成系统其它方面出现问题
-技术方面：
-    + 由于系统使用RPC调用，业务之间强依赖，一旦一个节点发布出现问题，会直接影响到一片业务，而且不好排查到源头
-    + 预发布和发布过程中发现的问题，及时排查修复后，没有经过测试验证，便上线，可能会由于短时间内精神紧张或考虑不周，导致出现更多bug&lt;/p&gt;
+    需求方面管理不足，产品在列出需求后，直接和具体的业务线开发程序员沟通，而没有更高一层的人员进行全局把控，导致出现以下问题：&lt;/p&gt;
 
-&lt;p&gt;最终，公司出台了这么几条规定来解决以上问题：
-+ 最直接的，就是控制发布时间，发布时间改为周二周四，常规火车发布
-+ 剩下的时间，除非为紧急发布，即出现线上bug，且影响程度到达high级别，必须经过各部门总监审批后，才能发布
-+ medium、low级别线上bug跟随周二周四火车发布修复，其他需求类发布一律禁止
-+ 发版当天，控制时间在晚上8:00之前必须发布完成，如未完成的，顺延到下一个发布日上线
-+ 新需求，不管难易大小，必须经过与BA（业务架构师）的沟通后，方可进行开发，保证业务可控，接口范围明确，需求与接口关系明确。
-+ 技术难点、流量较大接口，开发前需要经过技术架构师评审，开发完成后，需要其进行code review，保证代码质量
-+ 发版后，排查出的bug，不管解决难易，必须经过测试再次验证后方可上线，如果超过8:00，必须回滚，顺延下一发版日上线&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;一个需求本可以使用已有接口，却进行了重复开发&lt;/li&gt;
+&lt;li&gt;一个需求使用了已有接口，但是这个接口是用于已有业务场景，性能功能方面可能考虑不全，功能方面可能不能覆盖所有场景&lt;/li&gt;
+&lt;li&gt;本应进行拆分的接口，却还在原有接口上进行开发，导致接口职责不再单一，耦合度剧增&lt;/li&gt;
+&lt;li&gt;开发人员擅自接了一些看似简单的短时间能完成的需求，一来增加了发布次数，二来由于业务耦合度高，可能造成系统其它方面出现问题
+技术方面：&lt;/li&gt;
+&lt;li&gt;由于系统使用RPC调用，业务之间强依赖，一旦一个节点发布出现问题，会直接影响到一片业务，而且不好排查到源头&lt;/li&gt;
+&lt;li&gt;预发布和发布过程中发现的问题，及时排查修复后，没有经过测试验证，便上线，可能会由于短时间内精神紧张或考虑不周，导致出现更多bug&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;最终，公司出台了这么几条规定来解决以上问题：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;最直接的，就是控制发布时间，发布时间改为周二周四，常规火车发布&lt;/li&gt;
+&lt;li&gt;剩下的时间，除非为紧急发布，即出现线上bug，且影响程度到达high级别，必须经过各部门总监审批后，才能发布&lt;/li&gt;
+&lt;li&gt;medium、low级别线上bug跟随周二周四火车发布修复，其他需求类发布一律禁止&lt;/li&gt;
+&lt;li&gt;发版当天，控制时间在晚上8:00之前必须发布完成，如未完成的，顺延到下一个发布日上线&lt;/li&gt;
+&lt;li&gt;新需求，不管难易大小，必须经过与BA（业务架构师）的沟通后，方可进行开发，保证业务可控，接口范围明确，需求与接口关系明确。&lt;/li&gt;
+&lt;li&gt;技术难点、流量较大接口，开发前需要经过技术架构师评审，开发完成后，需要其进行code review，保证代码质量&lt;/li&gt;
+&lt;li&gt;发版后，排查出的bug，不管解决难易，必须经过测试再次验证后方可上线，如果超过8:00，必须回滚，顺延下一发版日上线&lt;/li&gt;
+&lt;/ul&gt;
 </description>
     </item>
     
@@ -126,14 +132,17 @@ fi
       <pubDate>Sun, 20 Mar 2016 20:01:15 +0800</pubDate>
       <author>jasondliu@foxmail.com (JasonLiu)</author>
       <guid>http://jasonliu798.github.io/blog/2016-03-20-%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E5%9D%91/</guid>
-      <description>&lt;p&gt;周末晚上，正在家里辐射4玩着正爽，网站突然挂站，前台502，赶忙登服务器，排查原因。
-网站架构是php通过socket，hessian协议调用，java写的一个proxy，通过hessian协议把php解析为java object，通过dubbo client rpc调用dubbo服务。
-排查后台的dubbo服务并未发现异常，但是日志刷新速度貌似比平常要慢一点。
-经运维重启php，dubbo服务后，暂时缓解了问题，不到1个小时，前台再次502。
-然后，开始排查各种日志，无奈本业务线的一个bug由于暂时未解决撞到枪口，虽然跟本次挂站无任何联系，也被叫到公司去改bug，无比蛋疼。
-根据Zabbix监控，发现proxy的流量先是有锯齿状抖动，然后流量锯齿状下跌到0，重启完服务后，连接数锯齿状抖动，TCP连接图中tcp.ESTAB情况类似，tcp.CLOSING却是一条流量很低的横线。
-但据运维检查网络并未发现问题。
-之后持续了半小时，流量突然恢复正常，原来运维把iptables关了，排查发现有人在8点通过主控机，执行了开启iptables的脚步，使用了默认设置，路由表的数量超过65535，拒绝数据传输。&lt;/p&gt;
+      <description>&lt;p&gt;周末晚上，正在家里辐射4玩着正爽，网站突然挂站，前台502，赶忙登服务器，排查原因。&lt;/p&gt;
+
+&lt;p&gt;网站架构是php通过socket，hessian协议调用，java写的一个proxy，通过hessian协议把php解析为java object，通过dubbo client rpc调用dubbo服务。
+排查后台的dubbo服务并未发现异常，但是日志刷新速度貌似比平常要慢一点。&lt;/p&gt;
+
+&lt;p&gt;经运维重启php，dubbo服务后，暂时缓解了问题，不到1个小时，前台再次502。
+然后，开始排查各种日志，无奈本业务线的一个bug由于暂时未解决撞到枪口，虽然跟本次挂站无任何联系，也被叫到公司去改bug，无比蛋疼。&lt;/p&gt;
+
+&lt;p&gt;根据Zabbix监控，发现proxy的流量先是有锯齿状抖动，然后流量锯齿状下跌到0，重启完服务后，连接数锯齿状抖动，TCP连接图中tcp.ESTAB情况类似，tcp.CLOSING却是一条流量很低的横线。但据运维检查网络并未发现问题。&lt;/p&gt;
+
+&lt;p&gt;之后持续了半小时，流量突然恢复正常，原来运维把iptables关了，排查发现有人在8点通过主控机，执行了开启iptables的脚本，使用了默认设置，路由表的数量超过65535，拒绝数据传输。&lt;/p&gt;
 </description>
     </item>
     
@@ -157,10 +166,13 @@ fi
 这里的hash需要key使用&lt;a href=&#34;https://github.com/twitter/twemproxy/blob/master/notes/recommendation.md#hash-tags&#34;&gt;hashtag&lt;/a&gt;，即在key中添加{}，默认情况下，twemproxy会使用整个key来计算哈希；如果存在{}，twemproxy只使用{}内的数据，计算hash值。
 如果不想改动key，而且数据量较小，也可以手动zrange出两个zset再zadd到目的key，不过这个操作的流量、CPU开销，就是zeunion的几倍了。&lt;/p&gt;
 
-&lt;p&gt;此文档特殊备注的还有以下几个命令：&lt;br /&gt;
-* &lt;code&gt;MSET support is not Atomic&lt;/code&gt; mset操作不是原子的&lt;br /&gt;
-* &lt;code&gt;RPOPLPUSH, SIDFF, SDIFFSTORE, SINTER, SINTERSTORE, SMOVE, SUNION, SUNIONSTORE, PFMERGE&lt;/code&gt;同样要求，源key和目标key，使用hashtag，hash到同一台服务器&lt;br /&gt;
-* &lt;code&gt;EVAL&lt;/code&gt;使用多个key时，要求同上&lt;/p&gt;
+&lt;p&gt;此文档特殊备注的还有以下几个命令：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;MSET support is not Atomic&lt;/code&gt; mset操作不是原子的&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;RPOPLPUSH, SIDFF, SDIFFSTORE, SINTER, SINTERSTORE, SMOVE, SUNION, SUNIONSTORE, PFMERGE&lt;/code&gt;同样要求，源key和目标key，使用hashtag，hash到同一台服务器&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;EVAL&lt;/code&gt;使用多个key时，要求同上&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;p&gt;#pipeline优化&lt;/p&gt;
 
@@ -204,15 +216,18 @@ fi
       <pubDate>Wed, 28 Oct 2015 11:32:01 +0800</pubDate>
       <author>jasondliu@foxmail.com (JasonLiu)</author>
       <guid>http://jasonliu798.github.io/blog/2015-10-28-IDEA%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/</guid>
-      <description>&lt;p&gt;#IDEA乱码问题
+      <description>&lt;p&gt;#IDEA乱码问题&lt;br /&gt;
 转为IDEA后，被这个乱码问题困扰了两天，最终解决了，写个文总结下。
 我们的项目全部使用UTF-8，先出现的问题是新建文件不是UTF-8，先修改如下配置后正常
 &lt;code&gt;File-&amp;gt;settings-&amp;gt;Editor-&amp;gt;File Encoding&lt;/code&gt;
 将Project Encoding、IDE Encoding都改为UTF-8后，新建文件就是UTF-8了，文件编码可以在状态栏看到。如果以前用其他编码编写的代码会出现乱码，写个程序转下就好。&lt;/p&gt;
 
-&lt;p&gt;但改完后，控制台显示依旧是乱码，尝试修改编译器配置，如下：
-&lt;code&gt;Settings-&amp;gt;Build,Execution,Deployment-&amp;gt;Compiler-&amp;gt;Additional build process VM options:&lt;/code&gt;
-增加了-Dfile.encoding=UTF-8，仍然无效。
+&lt;p&gt;但改完后，控制台显示依旧是乱码，尝试修改编译器配置，如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Settings-&amp;gt;Build,Execution,Deployment-&amp;gt;Compiler-&amp;gt;Additional build process VM options:
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;增加了-Dfile.encoding=UTF-8，仍然无效。
 然后尝试在Maven选项中增加-Dfile.encoding=UTF-8，仍然无效。&lt;/p&gt;
 
 &lt;p&gt;后查到&lt;a href=&#34;http://www.iteye.com/topic/1131087&#34;&gt;关于Idea testng单元测试乱码的解决&lt;/a&gt;，还可以更改idea的启动VM参数：
@@ -220,25 +235,27 @@ fi
 网上搜了很多资料，还是改上面那些东西，没啥新发现。
 突然看到前文中的为-Dfile.encoding=UTF8，UTF-8编码实际写的UTF8，中间没有短横杠，赶紧修改，重启IDEA，控制台终于显示正常。&lt;/p&gt;
 
-&lt;p&gt;但执行下面两行后，输出都为UTF-8带短横杆的，对idea.exe.vmoptions里为何不识别带横杠的UTF-8很费解
-&lt;code&gt;System.out.println(String.format(&amp;quot;file.encoding: %s&amp;quot;, System.getProperty(&amp;quot;file.encoding&amp;quot;)));
-   System.out.println(String.format(&amp;quot;defaultCharset: %s&amp;quot;, Charset.defaultCharset().name()));
-&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;但执行下面两行后，输出都为UTF-8带短横杆的，对idea.exe.vmoptions里为何不识别带横杠的UTF-8很费解&lt;/p&gt;
 
-&lt;p&gt;#IDEA特殊字符不可见问题
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;System.out.println(String.format(&amp;quot;file.encoding: %s&amp;quot;, System.getProperty(&amp;quot;file.encoding&amp;quot;)));
+System.out.println(String.format(&amp;quot;defaultCharset: %s&amp;quot;, Charset.defaultCharset().name()));
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;#IDEA特殊字符不可见问题&lt;br /&gt;
 某次将某些代码临时拷贝到mac自带便签工具，拷贝回来后，代码突然报错，由于中间还编辑了一些其他代码，仔细检查后并未发现语法错误，但IDEA一直提示unexpected token。
-怀疑是不可见字符引起，于是把代码发送至同事windows系统下的eclipse下，不可见字符终于显现出来真身了，一个方框，里面一个问号。
-解决方法：plugin中可以搜到一个插件&lt;code&gt;Zero width characters locator&lt;/code&gt;，不过安装后依旧不能让不可见字符显现。
+怀疑是不可见字符引起，于是把代码发送至同事windows系统下的eclipse下，不可见字符终于显现出来真身了，一个方框，里面一个问号。&lt;/p&gt;
+
+&lt;p&gt;解决方法：plugin中可以搜到一个插件&lt;code&gt;Zero width characters locator&lt;/code&gt;，不过安装后依旧不能让不可见字符显现。
 临时解决办法：侧边栏滚动条 的语法检查错误提示浮动窗口里，可以查看到哪有不可见字符，按指示删除即可。&lt;/p&gt;
 
-&lt;p&gt;#IDEA缓存问题
+&lt;p&gt;#IDEA缓存问题&lt;br /&gt;
 有时IDEA运行过久、项目开过多、手动添加修改一些配置，新导入的或者更换过依赖的项目会出现jdk不识别、maven的pom.xml检查多遍是正确的，但是仍然有些类无法被识别等错误。
 这时候可能是IDEA缓存出现问题，可以强制删除缓存，点击如下选项：&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;File-&amp;gt;Invalidate Caches/Restart...
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;#源码文件语法错误不提示，编译后才提示
+&lt;p&gt;#源码文件语法错误不提示，编译后才提示语法错误&lt;br /&gt;
 需要打开自动编译选项，具体位置：&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;File-&amp;gt;Other Settings-&amp;gt;Default Settings-&amp;gt;
@@ -247,7 +264,7 @@ Build,Execution,Deployment-&amp;gt;Compiler-&amp;gt;勾选 Make project automati
 
 &lt;p&gt;Power Save Mode打开时，即使设置了以上选项，仍然不会提示语法错误。&lt;/p&gt;
 
-&lt;p&gt;#git或svn等源码控制软件，更新源码后，同文件内容不同步，仍然为旧内容
+&lt;p&gt;#git或svn等源码控制软件，更新源码后，同文件内容不同步，仍然为旧内容&lt;br /&gt;
 IDEA运行一段时间后，如果机器内存较小，运行缓慢，或者打开项目过多，会出现以上情况。
 可以手动同步下磁盘文件，选项在&lt;/p&gt;
 

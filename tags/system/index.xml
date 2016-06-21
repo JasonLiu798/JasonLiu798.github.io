@@ -97,14 +97,17 @@ fi
       <pubDate>Sun, 20 Mar 2016 20:01:15 +0800</pubDate>
       <author>jasondliu@foxmail.com (JasonLiu)</author>
       <guid>http://jasonliu798.github.io/blog/2016-03-20-%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E5%9D%91/</guid>
-      <description>&lt;p&gt;周末晚上，正在家里辐射4玩着正爽，网站突然挂站，前台502，赶忙登服务器，排查原因。
-网站架构是php通过socket，hessian协议调用，java写的一个proxy，通过hessian协议把php解析为java object，通过dubbo client rpc调用dubbo服务。
-排查后台的dubbo服务并未发现异常，但是日志刷新速度貌似比平常要慢一点。
-经运维重启php，dubbo服务后，暂时缓解了问题，不到1个小时，前台再次502。
-然后，开始排查各种日志，无奈本业务线的一个bug由于暂时未解决撞到枪口，虽然跟本次挂站无任何联系，也被叫到公司去改bug，无比蛋疼。
-根据Zabbix监控，发现proxy的流量先是有锯齿状抖动，然后流量锯齿状下跌到0，重启完服务后，连接数锯齿状抖动，TCP连接图中tcp.ESTAB情况类似，tcp.CLOSING却是一条流量很低的横线。
-但据运维检查网络并未发现问题。
-之后持续了半小时，流量突然恢复正常，原来运维把iptables关了，排查发现有人在8点通过主控机，执行了开启iptables的脚步，使用了默认设置，路由表的数量超过65535，拒绝数据传输。&lt;/p&gt;
+      <description>&lt;p&gt;周末晚上，正在家里辐射4玩着正爽，网站突然挂站，前台502，赶忙登服务器，排查原因。&lt;/p&gt;
+
+&lt;p&gt;网站架构是php通过socket，hessian协议调用，java写的一个proxy，通过hessian协议把php解析为java object，通过dubbo client rpc调用dubbo服务。
+排查后台的dubbo服务并未发现异常，但是日志刷新速度貌似比平常要慢一点。&lt;/p&gt;
+
+&lt;p&gt;经运维重启php，dubbo服务后，暂时缓解了问题，不到1个小时，前台再次502。
+然后，开始排查各种日志，无奈本业务线的一个bug由于暂时未解决撞到枪口，虽然跟本次挂站无任何联系，也被叫到公司去改bug，无比蛋疼。&lt;/p&gt;
+
+&lt;p&gt;根据Zabbix监控，发现proxy的流量先是有锯齿状抖动，然后流量锯齿状下跌到0，重启完服务后，连接数锯齿状抖动，TCP连接图中tcp.ESTAB情况类似，tcp.CLOSING却是一条流量很低的横线。但据运维检查网络并未发现问题。&lt;/p&gt;
+
+&lt;p&gt;之后持续了半小时，流量突然恢复正常，原来运维把iptables关了，排查发现有人在8点通过主控机，执行了开启iptables的脚本，使用了默认设置，路由表的数量超过65535，拒绝数据传输。&lt;/p&gt;
 </description>
     </item>
     
