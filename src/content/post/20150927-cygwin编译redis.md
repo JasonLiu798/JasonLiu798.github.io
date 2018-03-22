@@ -1,6 +1,8 @@
 ---
 title: "cygwin编译redis"
-date: 2015-09-27T00:00:00+08:00
+date: 2015-09-27T12:55:10+08:00
+tags: ["code","redis"]
+topics: ["code","db"]
 draft: false
 ---
 
@@ -11,14 +13,14 @@ draft: false
 由于经常使用cygwin，windows上又没有命令行版的redis客户端，因此准备编译一个，没想到遇到一个恶心问题。
 
 先到官网下了源码
-``` shell
+```shell
 wget https://github.com/antirez/redis/archive/2.8.22.tar.gz
 tar -zpxvf redis-2.8.22.tar.gz
 ```
 
 cygwin需要安装gcc和make，使用setup.exe安装，安完后的环境
 
-``` shell
+```
 $ gcc -v
 COLLECT_GCC=gcc
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-cygwin/4.9.3/lto-wrapper.exe

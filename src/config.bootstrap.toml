@@ -1,0 +1,72 @@
+baseurl = "http://JasonLiu798.github.io"
+languageCode = "en-EN"
+
+title = "JasonLiu's Blog"
+
+# Copyright
+copyright = "(c) 2015 JasonLiu."
+
+theme ="hugo-bootstrap"
+
+paginate = 10
+paginatePath = "page"
+
+
+disablePathToLower = true
+
+
+[permalinks]
+    post = "/blog/:year-:month-:day-:title/"
+
+[indexes]
+  tag = "tags"
+  category = "categories"
+
+[author]
+    name = "JasonLiu"
+    email = "jasondliu@foxmail.com"
+
+#
+# All parameters below here are optional and can be mixed and matched.
+#
+[params]
+
+    # You can use markdown here.
+    brand = "foobar"
+    topline = "few words about your site"
+    footline = "code with <i class='fa fa-heart'></i>"
+
+    # Show a sidebar menu
+    showRightSidebar = true
+
+    # Text for the top menu link, which goes the root URL for the site.
+    # Default (if omitted) is "Home".
+    home = "home"
+
+    # Select a syntax highight.
+    # Check the static/css/highlight directory for options.
+    highlight = "default"
+
+    # Google Analytics.
+    googleAnalytics = "Your Google Analytics tracking code"
+
+    # Sidebar social links.
+    github = "https://github.com/JasonLiu798"
+
+    bitbucket = "" # Your Bitbucket profile ID
+    linkedin = "" # Your LinkedIn profile ID (from public URL)
+    googleplus = "" # Your Google+ profile ID
+    facebook = "" # Your Facebook profile ID
+    twitter = "" # Your Twitter profile ID
+    youtube = ""  # Your Youtube channel ID
+    flattr = ""  # populate with your flattr uid
+
+
+[blackfriday]
+    angledQuotes = true
+    fractions = false
+    hrefTargetBlank = false
+    latexDashes = true
+    plainIdAnchors = true
+    extensions = []
+    extensionmask = []
