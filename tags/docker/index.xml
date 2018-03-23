@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Docker on JasonLiu&#39;s Blog</title>
-    <link>https://JasonLiu798.github.io/tags/docker/</link>
+    <link>http://jasonliu798.github.io/tags/docker/</link>
     <description>Recent content in Docker on JasonLiu&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2018. All rights reserved.</copyright>
     <lastBuildDate>Sun, 05 Jun 2016 20:21:02 +0800</lastBuildDate>
     
-	<atom:link href="https://JasonLiu798.github.io/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://jasonliu798.github.io/tags/docker/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>docker踩坑记</title>
-      <link>https://JasonLiu798.github.io/post/code/system/20160605-docker%E8%B8%A9%E5%9D%91%E8%AE%B0/</link>
+      <link>http://jasonliu798.github.io/post/code/system/20160605-docker%E8%B8%A9%E5%9D%91%E8%AE%B0/</link>
       <pubDate>Sun, 05 Jun 2016 20:21:02 +0800</pubDate>
       
-      <guid>https://JasonLiu798.github.io/post/code/system/20160605-docker%E8%B8%A9%E5%9D%91%E8%AE%B0/</guid>
+      <guid>http://jasonliu798.github.io/post/code/system/20160605-docker%E8%B8%A9%E5%9D%91%E8%AE%B0/</guid>
       <description>&lt;p&gt;docker初步使用遇到的问题解决笔记&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>

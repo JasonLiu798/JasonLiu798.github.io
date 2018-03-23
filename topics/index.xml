@@ -2,58 +2,58 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Topics on JasonLiu&#39;s Blog</title>
-    <link>https://JasonLiu798.github.io/topics/</link>
+    <link>http://jasonliu798.github.io/topics/</link>
     <description>Recent content in Topics on JasonLiu&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2018. All rights reserved.</copyright>
     <lastBuildDate>Tue, 20 Jun 2017 00:00:00 +0800</lastBuildDate>
     
-	<atom:link href="https://JasonLiu798.github.io/topics/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://jasonliu798.github.io/topics/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Code</title>
-      <link>https://JasonLiu798.github.io/topics/code/</link>
+      <link>http://jasonliu798.github.io/topics/code/</link>
       <pubDate>Tue, 20 Jun 2017 00:00:00 +0800</pubDate>
       
-      <guid>https://JasonLiu798.github.io/topics/code/</guid>
+      <guid>http://jasonliu798.github.io/topics/code/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Game</title>
-      <link>https://JasonLiu798.github.io/topics/game/</link>
+      <link>http://jasonliu798.github.io/topics/game/</link>
       <pubDate>Sat, 14 Nov 2015 19:59:21 +0800</pubDate>
       
-      <guid>https://JasonLiu798.github.io/topics/game/</guid>
+      <guid>http://jasonliu798.github.io/topics/game/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Ide</title>
-      <link>https://JasonLiu798.github.io/topics/ide/</link>
+      <link>http://jasonliu798.github.io/topics/ide/</link>
       <pubDate>Tue, 20 Jun 2017 00:00:00 +0800</pubDate>
       
-      <guid>https://JasonLiu798.github.io/topics/ide/</guid>
+      <guid>http://jasonliu798.github.io/topics/ide/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Softwareengineering</title>
-      <link>https://JasonLiu798.github.io/topics/softwareengineering/</link>
+      <link>http://jasonliu798.github.io/topics/softwareengineering/</link>
       <pubDate>Fri, 13 May 2016 23:22:21 +0800</pubDate>
       
-      <guid>https://JasonLiu798.github.io/topics/softwareengineering/</guid>
+      <guid>http://jasonliu798.github.io/topics/softwareengineering/</guid>
       <description></description>
     </item>
     
     <item>
       <title>System</title>
-      <link>https://JasonLiu798.github.io/topics/system/</link>
+      <link>http://jasonliu798.github.io/topics/system/</link>
       <pubDate>Sun, 05 Jun 2016 20:21:02 +0800</pubDate>
       
-      <guid>https://JasonLiu798.github.io/topics/system/</guid>
+      <guid>http://jasonliu798.github.io/topics/system/</guid>
       <description></description>
     </item>
     

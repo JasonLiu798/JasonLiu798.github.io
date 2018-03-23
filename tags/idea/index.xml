@@ -2,32 +2,32 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Idea on JasonLiu&#39;s Blog</title>
-    <link>https://JasonLiu798.github.io/tags/idea/</link>
+    <link>http://jasonliu798.github.io/tags/idea/</link>
     <description>Recent content in Idea on JasonLiu&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2018. All rights reserved.</copyright>
     <lastBuildDate>Tue, 20 Jun 2017 00:00:00 +0800</lastBuildDate>
     
-	<atom:link href="https://JasonLiu798.github.io/tags/idea/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://jasonliu798.github.io/tags/idea/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>IDEA maven多模块 使用jetty容器热部署解决方案</title>
-      <link>https://JasonLiu798.github.io/post/code/ide/20170620-idea-maven%E5%A4%9A%E6%A8%A1%E5%9D%97-%E4%BD%BF%E7%94%A8jetty%E5%AE%B9%E5%99%A8%E7%83%AD%E9%83%A8%E7%BD%B2%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</link>
+      <link>http://jasonliu798.github.io/post/code/ide/20170620-idea-maven%E5%A4%9A%E6%A8%A1%E5%9D%97-%E4%BD%BF%E7%94%A8jetty%E5%AE%B9%E5%99%A8%E7%83%AD%E9%83%A8%E7%BD%B2%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</link>
       <pubDate>Tue, 20 Jun 2017 00:00:00 +0800</pubDate>
       
-      <guid>https://JasonLiu798.github.io/post/code/ide/20170620-idea-maven%E5%A4%9A%E6%A8%A1%E5%9D%97-%E4%BD%BF%E7%94%A8jetty%E5%AE%B9%E5%99%A8%E7%83%AD%E9%83%A8%E7%BD%B2%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</guid>
+      <guid>http://jasonliu798.github.io/post/code/ide/20170620-idea-maven%E5%A4%9A%E6%A8%A1%E5%9D%97-%E4%BD%BF%E7%94%A8jetty%E5%AE%B9%E5%99%A8%E7%83%AD%E9%83%A8%E7%BD%B2%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</guid>
       <description>&lt;p&gt;接[IDEA maven多模块 使用jetty热部署]上文，尝试了IDEA自带的jetty插件（project structure的artifacts里的配置不定期丢失），maven的jetty插件（不能热部署，会导致整体重启），全都不能做到完美的多模块热部署，而eclipse的jetty插件这么好用，那就把移植过来吧，以下为具体解决方案&amp;hellip;
 &lt;/p&gt;</description>
     </item>
     
     <item>
       <title>IDEA jetty maven多模块热部署的坑</title>
-      <link>https://JasonLiu798.github.io/post/code/ide/20170520-idea-jetty-maven%E5%A4%9A%E6%A8%A1%E5%9D%97%E7%83%AD%E9%83%A8%E7%BD%B2%E7%9A%84%E5%9D%91/</link>
+      <link>http://jasonliu798.github.io/post/code/ide/20170520-idea-jetty-maven%E5%A4%9A%E6%A8%A1%E5%9D%97%E7%83%AD%E9%83%A8%E7%BD%B2%E7%9A%84%E5%9D%91/</link>
       <pubDate>Mon, 20 Mar 2017 12:02:11 +0800</pubDate>
       
-      <guid>https://JasonLiu798.github.io/post/code/ide/20170520-idea-jetty-maven%E5%A4%9A%E6%A8%A1%E5%9D%97%E7%83%AD%E9%83%A8%E7%BD%B2%E7%9A%84%E5%9D%91/</guid>
+      <guid>http://jasonliu798.github.io/post/code/ide/20170520-idea-jetty-maven%E5%A4%9A%E6%A8%A1%E5%9D%97%E7%83%AD%E9%83%A8%E7%BD%B2%E7%9A%84%E5%9D%91/</guid>
       <description>&lt;p&gt;idea mavne多模块，使用jetty容器热部署的开发大坑&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
@@ -35,10 +35,10 @@
     
     <item>
       <title>IDEA的一些坑(持续更新)</title>
-      <link>https://JasonLiu798.github.io/post/code/ide/20151028-idea%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/</link>
+      <link>http://jasonliu798.github.io/post/code/ide/20151028-idea%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/</link>
       <pubDate>Wed, 28 Oct 2015 11:32:01 +0800</pubDate>
       
-      <guid>https://JasonLiu798.github.io/post/code/ide/20151028-idea%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/</guid>
+      <guid>http://jasonliu798.github.io/post/code/ide/20151028-idea%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/</guid>
       <description>&lt;p&gt;idea使用的一些常见问题解决总结&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>

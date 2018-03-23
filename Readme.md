@@ -1,19 +1,25 @@
 
 # 常用
 ## 生成
-hugo --theme=blackburn --baseUrl="https://JasonLiu798.github.io"
+```shell
+hugo
+hugo --theme=blackburn --baseUrl="https://JasonLiu798.github.io/"
 hugo --theme=hyde --baseUrl="https://JasonLiu798.github.io"
-
+```
 
 ## 新建
+```shell
 hugo new post/useGit.md
+```
 
 ## 调试
+```shell
 hugo server --theme=blackburn --buildDrafts
 hugo server --theme=blackburn --buildDrafts --watch
 hugo server --theme=hyde --buildDrafts --watch
 hugo server --theme=tranquilpeak --buildDrafts --watch
 hugo server --theme=hyde --buildDrafts
+```
 
 # 主题
 https://github.com/yoshiharuyamashita/blackburn
@@ -48,8 +54,12 @@ http://jasonliu798.github.io/?error=redirect_uri_mismatch&error_description=The+
 检查发现url配置问题
 
 ### Error: Not Found
+repo库填写问题，详见[gitment issues 18](https://github.com/imsun/gitment/issues/18)
+owner填用户名，非用户id
+
+
 配置主题文件_config.yml时，格式错误，比如gitment前有空格也会造成代码生成问题；
-Error: Not Found问题，repo库填写问题，详见[gitment issues 18](https://github.com/imsun/gitment/issues/18)
+Error: Not Found问题，
 其他问题，参见作者项目的Issue
 作者提醒使用本项目的用户，请保持克制，切勿滥用。详见 Gitment：使用 GitHub Issues 搭建评论系统
 
