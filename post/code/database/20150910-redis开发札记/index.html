@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.35" />
+
+  <title>redis开发札记 &middot; JasonLiu&#39;s Blog</title>
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://JasonLiu798.github.io/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://JasonLiu798.github.io/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="https://JasonLiu798.github.io/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+ 
+  
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+  <link rel="shortcut icon" href="https://JasonLiu798.github.ioimg/favicon.ico" type="image/x-icon" />
+
+  
+  
+
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+  <a class="pure-menu-heading brand" href="https://JasonLiu798.github.io/">Menu</a>
+
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://JasonLiu798.github.io/"><i class='fa fa-home fa-fw'></i>Home</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://JasonLiu798.github.io/post/"><i class='fa fa-list fa-fw'></i>Posts</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://JasonLiu798.github.io/about/"><i class='fa fa-user fa-fw'></i>About</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://JasonLiu798.github.io/contact/"><i class='fa fa-phone fa-fw'></i>Contact</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://JasonLiu798.github.io/topics/"><i class='fa fa-folder fa-fw'></i>Topics</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://JasonLiu798.github.io/tags/"><i class='fa fa-tags fa-fw'></i>Tags</a>
+      
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://twitter.com/Asynct42" target="_blank"><i class="fa fa-twitter-square fa-fw"></i>Twitter</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://github.com/JasonLiu798" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </ul>
+</div>
+
+
+  <div>
+  <div class="small-print">
+    <small>&copy; 2018. All rights reserved.</small>
+  </div>
+  <div class="small-print">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>redis开发札记</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+  <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>20 Mar 2016, 17:54</time>
+  </div>
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-folder fa-fw"></i>
+    
+      <a class="post-taxonomy-topic" href="https://JasonLiu798.github.iotopics/code">code</a>
+    
+  </div>
+  
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://JasonLiu798.github.iotags/code">code</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://JasonLiu798.github.iotags/redis">redis</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  <p>redis开发躺坑记录&hellip;</p>
+
+<p></p>
+
+<p>由于公司收藏功能全部使用redis存储数据，数据库冷备，redis流量不断增加，最后经过技术选型，使用twemproxy增加redis分片，容纳更多流量。
+然而在开发中出现一些问题</p>
+
+<p>#hashtag<br />
+首先是开发中用到了redis的有序数组，即zset，并且使用到其中一条命令ZUNIONSTORE，在测试环境的单机系统中功能正常，但是线上环境twemproxy中功能却不能正常使用，数据异常，不得不紧急回滚。
+查询twemproxy的<a href="https://github.com/twitter/twemproxy/blob/master/notes/redis.md">Redis Command Support</a>，支持的命令包含ZUNIONSTORE，但下面包含一行小字</p>
+
+<pre><code>ZINTERSTORE and ZUNIONSTORE support requires that the supplied keys hash to the same server. You can ensure this by using the same hashtag for all keys in the command. Twemproxy does no checking on its end to verify that all the keys hash to the same server, and the given command is forwarded to the server that the first key hashes to.
+</code></pre>
+
+<p>zset的命令中，不光是ZUNIONSTORE，ZINTERSTORE也需要将key hash到同一分片服务器，才能保证结果正常。
+这里的hash需要key使用<a href="https://github.com/twitter/twemproxy/blob/master/notes/recommendation.md#hash-tags">hashtag</a>，即在key中添加{}，默认情况下，twemproxy会使用整个key来计算哈希；如果存在{}，twemproxy只使用{}内的数据，计算hash值。
+如果不想改动key，而且数据量较小，也可以手动zrange出两个zset再zadd到目的key，不过这个操作的流量、CPU开销，就是zeunion的几倍了。</p>
+
+<p>此文档特殊备注的还有以下几个命令：</p>
+
+<ul>
+<li><code>MSET support is not Atomic</code> mset操作不是原子的</li>
+<li><code>RPOPLPUSH, SIDFF, SDIFFSTORE, SINTER, SINTERSTORE, SMOVE, SUNION, SUNIONSTORE, PFMERGE</code>同样要求，源key和目标key，使用hashtag，hash到同一台服务器</li>
+<li><code>EVAL</code>使用多个key时，要求同上</li>
+</ul>
+
+<p>#pipeline优化</p>
+
+<p>#连接获取超时</p>
+
+  
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
+    
+    <a href="https://JasonLiu798.github.io/post/game/20151114-heartstone-jackson/"><i class="fa fa-chevron-left"></i></a>
+    
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="prev">
+      <a href="https://JasonLiu798.github.io/post/game/20151114-heartstone-jackson/">关于炉石传说6回合抽到杰克逊的概率</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="next">
+      <a href="https://JasonLiu798.github.io/post/code/system/20160320-%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E5%9D%91/">防火墙的坑</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-1-24" style="text-align: right;">
+    
+    <a href="https://JasonLiu798.github.io/post/code/system/20160320-%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E5%9D%91/"><i class="fa fa-chevron-right"></i></a>
+    
+  </div>
+</div>
+
+
+
+  
+
+</div>
+
+
+<div class="gitcomments" id="container">
+</div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: 'redis开发札记', 
+  owner: 'JasonLiu798',
+  repo: 'JasonLiu798.github.io',
+  oauth: {
+    client_id: 'c0bc10b2101e2a6101e2',
+    client_secret: 'd8ef1cd91f59ae0f842933cd2847772ac1274112',
+  },
+})
+gitment.render('container')
+</script>
+
+<style>
+.gitcomments{
+  margin:50px;
+}
+</style>
+</div>
+</div>
+<script src="https://JasonLiu798.github.iojs/ui.js"></script>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-103593285-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+
+
+</body>
+</html>
+

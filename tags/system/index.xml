@@ -2,113 +2,47 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>System on JasonLiu&#39;s Blog</title>
-    <link>http://JasonLiu798.github.io/tags/system/</link>
+    <link>https://JasonLiu798.github.io/tags/system/</link>
     <description>Recent content in System on JasonLiu&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-EN</language>
-    <managingEditor>jasondliu@foxmail.com (JasonLiu)</managingEditor>
-    <webMaster>jasondliu@foxmail.com (JasonLiu)</webMaster>
-    <copyright>(c) 2015 JasonLiu.</copyright>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018. All rights reserved.</copyright>
     <lastBuildDate>Sun, 05 Jun 2016 20:21:02 +0800</lastBuildDate>
-    <atom:link href="http://JasonLiu798.github.io/tags/system/index.xml" rel="self" type="application/rss+xml" />
+    
+	<atom:link href="https://JasonLiu798.github.io/tags/system/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>docker踩坑记</title>
-      <link>http://jasonliu798.github.io/blog/2016-06-05-docker%E8%B8%A9%E5%9D%91%E8%AE%B0/</link>
+      <link>https://JasonLiu798.github.io/post/code/system/20160605-docker%E8%B8%A9%E5%9D%91%E8%AE%B0/</link>
       <pubDate>Sun, 05 Jun 2016 20:21:02 +0800</pubDate>
-      <author>jasondliu@foxmail.com (JasonLiu)</author>
-      <guid>http://jasonliu798.github.io/blog/2016-06-05-docker%E8%B8%A9%E5%9D%91%E8%AE%B0/</guid>
-      <description>&lt;p&gt;最近开始使用docker，一来是镜像开实例要比新建虚拟机要方便不少，二来docker发展的也相对成熟了，有了docker-toolbox这种一键安装包，docker-hub在国内也有各种各种镜像库了，资源获取比刚出来那阵要方便多了。不过坑还是不少，此总结下。&lt;/p&gt;
+      
+      <guid>https://JasonLiu798.github.io/post/code/system/20160605-docker%E8%B8%A9%E5%9D%91%E8%AE%B0/</guid>
+      <description>&lt;p&gt;docker初步使用遇到的问题解决笔记&lt;/p&gt;
 
-&lt;p&gt;#安装&lt;br /&gt;
-安装推荐使用docker-toolbox，由于前面使用vagrant已经安装了virtual box，就不需要安装了，没有的话可以到oracle官网下载。&lt;/p&gt;
-
-&lt;p&gt;#镜像&lt;br /&gt;
-##找镜像&lt;br /&gt;
-docker镜像在docker-hub可以下到，不过速度较慢，推荐国内几个两个资源
-&lt;a href=&#34;https://dev.aliyun.com/search.html&#34;&gt;阿里hub&lt;/a&gt;
-&lt;a href=&#34;http://get.daocloud.io/&#34;&gt;daocloud&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;##docker pull stuck&lt;br /&gt;
-docker pull了一半，由于有其他事，机器暂时待机了，唤醒机器后，docker pull就卡着不动了。
-检查网络没有任何，等了几分钟左右，进度没有任何变化，只好强制中断。再次docker pull同一个镜像，下载进度还是从刚下载的地方开始，进度没有任何改变。&lt;/p&gt;
-
-&lt;p&gt;没办法，只能想办法把下了一半的镜像，找到手动删除（固态硬盘的空间还是很宝贵的，一个镜像占掉了近1个G）。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;&amp;gt;docker info
-/mnt/sda1/var/lib/docker
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;可以找到docker主目录/var/lib/docker/，下好镜像存放在/var/lib/docker/image里，但没有刚下了一半的镜像。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker@default:/mnt/sda1/var/lib/docker$ sudo ls
-aufs        containers  image       network     tmp         trust       volumes
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;ls下tmp目录，目录大小跟刚下载一半的镜像大小一样，可见下一半的东西就在这了，删除了此目录
-继续docker pull，仍然没法继续下载，应该在某个地方还有下载缓存，最后一招，重启docker-machine&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker-machine restart
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;再次尝试docker pull，终于开始重头下载了。&lt;/p&gt;
-
-&lt;p&gt;##Error checking TLS connection: Error checking and/or regenerating the certs&lt;br /&gt;
-由于docker-machine的ip是动态分配的，重启过一两次后，可能会分配一个不同的IP，需要重新生成证书才能ssh登录docker-machine。
-还一种解决方法就是设个固定IP，下面讲下如何配固定IP。&lt;/p&gt;
-
-&lt;p&gt;##docker-machine 设置静态IP&lt;br /&gt;
-docker-machine的linux版本是Core Linux，不是发行版，没法直接配静态IP。查看机器进程后，发现默认是通过udhcpc获取一个动态IP，重启后，有可能获取到不一样的IP。&lt;/p&gt;
-
-&lt;p&gt;虽然可以通过&lt;code&gt;docker-machine env default&lt;/code&gt;，获取到$DOCKER_HOST，但在需要固定IP的场合，还是比较麻烦。
-搜集资料后发现，docker-machine没有固定IP这个已经在github上提过一个issue，目前还没有修复，评论里有种方法测试可行：
-在/var/lib/boot2docker目录新建bootsync.sh，文件内设定固定IP&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;ifconfig eth1 192.168.99.150 netmask 255.255.255.0 broadcast 192.168.99.255 up
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;但是此方法设定的IP在机器启动每20分钟左右，就会被后台启动的dhcp client重新获取一次IP，IP被设置成了新IP。&lt;/p&gt;
-
-&lt;p&gt;目前，临时解决方案有两种：&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;把dhcp client关掉，dhcp client启动脚本可以在启动目录/etc/rc.d 找到，文件名dhcp.sh&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;if [ $DEVICE = &amp;quot;eth1&amp;quot; ]; then
- ifconfig eth1 192.168.99.150 netmask 255.255.255.0 broadcast 192.168.99.255 up
-else
-...
-fi
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;在文件内的for循环加了个判断条件，如果是eth1网卡，则设定固定IP，else 其他网卡默认还通过dhcp获取IP&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;不需要关闭dhcp client的方法，写个计划任务，1分钟重新设定一次IP&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;*/1 * * * * ifconfig eth1 192.168.99.150 netmask 255.255.255.0 broadcast 192.168.99.255 up
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>防火墙的坑</title>
-      <link>http://jasonliu798.github.io/blog/2016-03-20-%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E5%9D%91/</link>
+      <link>https://JasonLiu798.github.io/post/code/system/20160320-%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E5%9D%91/</link>
       <pubDate>Sun, 20 Mar 2016 20:01:15 +0800</pubDate>
-      <author>jasondliu@foxmail.com (JasonLiu)</author>
-      <guid>http://jasonliu798.github.io/blog/2016-03-20-%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E5%9D%91/</guid>
-      <description>&lt;p&gt;周末晚上，正在家里辐射4玩着正爽，网站突然挂站，前台502，赶忙登服务器，排查原因。&lt;/p&gt;
+      
+      <guid>https://JasonLiu798.github.io/post/code/system/20160320-%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E5%9D%91/</guid>
+      <description>&lt;p&gt;生产环境防火墙的坑&lt;/p&gt;
 
-&lt;p&gt;网站架构是php通过socket，hessian协议调用，java写的一个proxy，通过hessian协议把php解析为java object，通过dubbo client rpc调用dubbo服务。
-排查后台的dubbo服务并未发现异常，但是日志刷新速度貌似比平常要慢一点。&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>cygwin编译redis</title>
+      <link>https://JasonLiu798.github.io/post/code/system/20150927-cygwin%E7%BC%96%E8%AF%91redis/</link>
+      <pubDate>Sun, 27 Sep 2015 12:55:10 +0800</pubDate>
+      
+      <guid>https://JasonLiu798.github.io/post/code/system/20150927-cygwin%E7%BC%96%E8%AF%91redis/</guid>
+      <description>&lt;p&gt;由于经常使用cygwin，windows上又没有命令行版的redis客户端，因此准备编译一个，没想到遇到一个恶心问题。&lt;/p&gt;
 
-&lt;p&gt;经运维重启php，dubbo服务后，暂时缓解了问题，不到1个小时，前台再次502。
-然后，开始排查各种日志，无奈本业务线的一个bug由于暂时未解决撞到枪口，虽然跟本次挂站无任何联系，也被叫到公司去改bug，无比蛋疼。&lt;/p&gt;
-
-&lt;p&gt;根据Zabbix监控，发现proxy的流量先是有锯齿状抖动，然后流量锯齿状下跌到0，重启完服务后，连接数锯齿状抖动，TCP连接图中tcp.ESTAB情况类似，tcp.CLOSING却是一条流量很低的横线。但据运维检查网络并未发现问题。&lt;/p&gt;
-
-&lt;p&gt;之后持续了半小时，流量突然恢复正常，原来运维把iptables关了，排查发现有人在8点通过主控机，执行了开启iptables的脚本，使用了默认设置，路由表的数量超过65535，拒绝数据传输。&lt;/p&gt;
-</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
   </channel>

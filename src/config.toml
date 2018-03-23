@@ -1,6 +1,6 @@
 baseURL = "jasonliu798.github.io"
 languageCode = "en-us"
-title = "My Blog"
+title = "JasonLiu's Blog"
 
 copyright = "&copy; 2018. All rights reserved."
 canonifyurls = true
@@ -14,7 +14,7 @@ theme = "blackburn"
 
 [params]
   # Shown in the home page
-  subtitle = "Move on"
+  subtitle = "O'caption, My caption!"
   brand = "Menu"
   googleAnalytics = "UA-103593285-1"
   # CSS name for highlight.js

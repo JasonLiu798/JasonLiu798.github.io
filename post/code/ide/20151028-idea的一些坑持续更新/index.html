@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.35" />
+
+  <title>IDEA的一些坑(持续更新) &middot; JasonLiu&#39;s Blog</title>
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://JasonLiu798.github.io/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://JasonLiu798.github.io/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="https://JasonLiu798.github.io/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+ 
+  
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+  <link rel="shortcut icon" href="https://JasonLiu798.github.ioimg/favicon.ico" type="image/x-icon" />
+
+  
+  
+
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+  <a class="pure-menu-heading brand" href="https://JasonLiu798.github.io/">Menu</a>
+
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://JasonLiu798.github.io/"><i class='fa fa-home fa-fw'></i>Home</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://JasonLiu798.github.io/post/"><i class='fa fa-list fa-fw'></i>Posts</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://JasonLiu798.github.io/about/"><i class='fa fa-user fa-fw'></i>About</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://JasonLiu798.github.io/contact/"><i class='fa fa-phone fa-fw'></i>Contact</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://JasonLiu798.github.io/topics/"><i class='fa fa-folder fa-fw'></i>Topics</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://JasonLiu798.github.io/tags/"><i class='fa fa-tags fa-fw'></i>Tags</a>
+      
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://twitter.com/Asynct42" target="_blank"><i class="fa fa-twitter-square fa-fw"></i>Twitter</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://github.com/JasonLiu798" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </ul>
+</div>
+
+
+  <div>
+  <div class="small-print">
+    <small>&copy; 2018. All rights reserved.</small>
+  </div>
+  <div class="small-print">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>IDEA的一些坑(持续更新)</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+  <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>28 Oct 2015, 11:32</time>
+  </div>
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-folder fa-fw"></i>
+    
+      <a class="post-taxonomy-topic" href="https://JasonLiu798.github.iotopics/code">code</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-topic" href="https://JasonLiu798.github.iotopics/ide">IDE</a>
+    
+  </div>
+  
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://JasonLiu798.github.iotags/code">code</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://JasonLiu798.github.iotags/ide">IDE</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://JasonLiu798.github.iotags/idea">IDEA</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  <p>idea使用的一些常见问题解决总结</p>
+
+<p></p>
+
+<h1 id="idea乱码问题">IDEA乱码问题</h1>
+
+<p>转为IDEA后，被这个乱码问题困扰了两天，最终解决了，写个文总结下。
+我们的项目全部使用UTF-8，先出现的问题是新建文件不是UTF-8，先修改如下配置后正常
+<code>File-&gt;settings-&gt;Editor-&gt;File Encoding</code>
+将Project Encoding、IDE Encoding都改为UTF-8后，新建文件就是UTF-8了，文件编码可以在状态栏看到。如果以前用其他编码编写的代码会出现乱码，写个程序转下就好。</p>
+
+<p>但改完后，控制台显示依旧是乱码，尝试修改编译器配置，如下：</p>
+
+<pre><code>Settings-&gt;Build,Execution,Deployment-&gt;Compiler-&gt;Additional build process VM options:
+</code></pre>
+
+<p>增加了-Dfile.encoding=UTF-8，仍然无效。
+然后尝试在Maven选项中增加-Dfile.encoding=UTF-8，仍然无效。</p>
+
+<p>后查到<a href="http://www.iteye.com/topic/1131087">关于Idea testng单元测试乱码的解决</a>，还可以更改idea的启动VM参数：
+<code>IEDA安装目录\bin</code>下编辑idea.exe.vmoptions，增加一行-Dfile.encoding=UTF-8，依旧无效。
+网上搜了很多资料，还是改上面那些东西，没啥新发现。
+突然看到前文中的为-Dfile.encoding=UTF8，UTF-8编码实际写的UTF8，中间没有短横杠，赶紧修改，重启IDEA，控制台终于显示正常。</p>
+
+<p>但执行下面两行后，输出都为UTF-8带短横杆的，对idea.exe.vmoptions里为何不识别带横杠的UTF-8很费解</p>
+
+<pre><code class="language-java">System.out.println(String.format(&quot;file.encoding: %s&quot;, System.getProperty(&quot;file.encoding&quot;)));
+System.out.println(String.format(&quot;defaultCharset: %s&quot;, Charset.defaultCharset().name()));
+</code></pre>
+
+<h1 id="idea特殊字符不可见问题">IDEA特殊字符不可见问题</h1>
+
+<p>某次将某些代码临时拷贝到mac自带便签工具，拷贝回来后，代码突然报错，由于中间还编辑了一些其他代码，仔细检查后并未发现语法错误，但IDEA一直提示unexpected token。
+怀疑是不可见字符引起，于是把代码发送至同事windows系统下的eclipse下，不可见字符终于显现出来真身了，一个方框，里面一个问号。</p>
+
+<p>解决方法：plugin中可以搜到一个插件<code>Zero width characters locator</code>，不过安装后依旧不能让不可见字符显现。
+临时解决办法：侧边栏滚动条 的语法检查错误提示浮动窗口里，可以查看到哪有不可见字符，按指示删除即可。</p>
+
+<h1 id="idea缓存问题">IDEA缓存问题</h1>
+
+<p>有时IDEA运行过久、项目开过多、手动添加修改一些配置，新导入的或者更换过依赖的项目会出现jdk不识别、maven的pom.xml检查多遍是正确的，但是仍然有些类无法被识别等错误。
+这时候可能是IDEA缓存出现问题，可以强制删除缓存，点击如下选项：</p>
+
+<pre><code>File-&gt;Invalidate Caches/Restart...
+</code></pre>
+
+<h1 id="源码文件语法错误不提示-编译后才提示语法错误">源码文件语法错误不提示，编译后才提示语法错误</h1>
+
+<p>需要打开自动编译选项，具体位置：</p>
+
+<pre><code>File-&gt;Other Settings-&gt;Default Settings-&gt;
+Build,Execution,Deployment-&gt;Compiler-&gt;勾选 Make project automatically
+</code></pre>
+
+<p>Power Save Mode打开时，即使设置了以上选项，仍然不会提示语法错误。</p>
+
+<h1 id="git或svn等源码控制软件-更新源码后-同文件内容不同步-仍然为旧内容">git或svn等源码控制软件，更新源码后，同文件内容不同步，仍然为旧内容</h1>
+
+<p>IDEA运行一段时间后，如果机器内存较小，运行缓慢，或者打开项目过多，会出现以上情况。
+可以手动同步下磁盘文件，选项在</p>
+
+<pre><code>File-&gt;Synchronize
+</code></pre>
+
+<p>点击后，强制同步磁盘文件</p>
+
+  
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
+    
+    <a href="https://JasonLiu798.github.io/post/code/system/20150927-cygwin%E7%BC%96%E8%AF%91redis/"><i class="fa fa-chevron-left"></i></a>
+    
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="prev">
+      <a href="https://JasonLiu798.github.io/post/code/system/20150927-cygwin%E7%BC%96%E8%AF%91redis/">cygwin编译redis</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="next">
+      <a href="https://JasonLiu798.github.io/post/game/20151114-heartstone-jackson/">关于炉石传说6回合抽到杰克逊的概率</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-1-24" style="text-align: right;">
+    
+    <a href="https://JasonLiu798.github.io/post/game/20151114-heartstone-jackson/"><i class="fa fa-chevron-right"></i></a>
+    
+  </div>
+</div>
+
+
+
+  
+
+</div>
+
+
+<div class="gitcomments" id="container">
+</div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: 'IDEA的一些坑(持续更新)', 
+  owner: 'JasonLiu798',
+  repo: 'JasonLiu798.github.io',
+  oauth: {
+    client_id: 'c0bc10b2101e2a6101e2',
+    client_secret: 'd8ef1cd91f59ae0f842933cd2847772ac1274112',
+  },
+})
+gitment.render('container')
+</script>
+
+<style>
+.gitcomments{
+  margin:50px;
+}
+</style>
+</div>
+</div>
+<script src="https://JasonLiu798.github.iojs/ui.js"></script>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-103593285-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+
+
+</body>
+</html>
+

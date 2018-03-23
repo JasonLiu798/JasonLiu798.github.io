@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.35" />
+
+  <title>IDEA maven多模块 使用jetty容器热部署解决方案 &middot; JasonLiu&#39;s Blog</title>
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://JasonLiu798.github.io/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://JasonLiu798.github.io/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="https://JasonLiu798.github.io/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+ 
+  
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+  <link rel="shortcut icon" href="https://JasonLiu798.github.ioimg/favicon.ico" type="image/x-icon" />
+
+  
+  
+
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+  <a class="pure-menu-heading brand" href="https://JasonLiu798.github.io/">Menu</a>
+
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://JasonLiu798.github.io/"><i class='fa fa-home fa-fw'></i>Home</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://JasonLiu798.github.io/post/"><i class='fa fa-list fa-fw'></i>Posts</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://JasonLiu798.github.io/about/"><i class='fa fa-user fa-fw'></i>About</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://JasonLiu798.github.io/contact/"><i class='fa fa-phone fa-fw'></i>Contact</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://JasonLiu798.github.io/topics/"><i class='fa fa-folder fa-fw'></i>Topics</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://JasonLiu798.github.io/tags/"><i class='fa fa-tags fa-fw'></i>Tags</a>
+      
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://twitter.com/Asynct42" target="_blank"><i class="fa fa-twitter-square fa-fw"></i>Twitter</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://github.com/JasonLiu798" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </ul>
+</div>
+
+
+  <div>
+  <div class="small-print">
+    <small>&copy; 2018. All rights reserved.</small>
+  </div>
+  <div class="small-print">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>IDEA maven多模块 使用jetty容器热部署解决方案</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+  <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>20 Jun 2017, 00:00</time>
+  </div>
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-folder fa-fw"></i>
+    
+      <a class="post-taxonomy-topic" href="https://JasonLiu798.github.iotopics/code">code</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-topic" href="https://JasonLiu798.github.iotopics/ide">IDE</a>
+    
+  </div>
+  
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://JasonLiu798.github.iotags/code">code</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://JasonLiu798.github.iotags/ide">IDE</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://JasonLiu798.github.iotags/idea">IDEA</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  <p>接[IDEA maven多模块 使用jetty热部署]上文，尝试了IDEA自带的jetty插件（project structure的artifacts里的配置不定期丢失），maven的jetty插件（不能热部署，会导致整体重启），全都不能做到完美的多模块热部署，而eclipse的jetty插件这么好用，那就把移植过来吧，以下为具体解决方案&hellip;
+</p>
+
+<h2 id="序">序</h2>
+
+<p>尝试了IDEA自带的jetty插件（project structure的artifacts里的配置不定期丢失），maven的jetty插件（不能热部署，会导致整体重启），全都不能做到完美的多模块热部署，而eclipse的jetty插件这么好用，那就把移植过来吧，以下为具体解决方案&hellip;</p>
+
+<h2 id="总体思路">总体思路</h2>
+
+<ul>
+<li>找到eclipse jetty插件的入口函数</li>
+<li>确定如何传参</li>
+<li>获取或配置各类参数</li>
+<li>启动</li>
+</ul>
+
+<h2 id="找入口函数">找入口函数</h2>
+
+<p>首先，在github上搜了一圈，找到了eclipse jetty插件的repo <a href="https://github.com/eclipse-jetty/eclipse-jetty-plugin">eclipse-jetty-plugin</a>，<a href="http://eclipse-jetty.github.io/">项目主页</a>翻了一遍，没发现什么有效信息
+那就只好看源码了，git clone下拉了源码，下一步就是找到入口函数在哪。</p>
+
+<p>先想到的思路，是从启动打印的那个logo入手，很快就搜到在类 net.sourceforge.eclipsejetty.starter.jetty9.Jetty9LauncherMain下的printLogo()函数内，被继承的抽象类内的launch()函数调用，lanuch被main调用，正好往上两行就是main函数了</p>
+
+<pre><code class="language-java">    /**
+     * Calls the {@link #launch(String[])} method
+     * 
+     * @param args the arguments
+     * @throws Exception on occasion
+     */
+    public static void main(String[] args) throws Exception
+    {
+        new Jetty9LauncherMain().launch(args);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see net.sourceforge.eclipsejetty.starter.common.AbstractJettyLauncherMain#printLogo(java.io.PrintStream)
+     */
+    @Override
+    protected void printLogo(PrintStream out)
+    {
+        out.println(&quot;   ____    ___                   __    __  __         ___&quot;);
+        out.println(&quot;  / __/___/ (_)__  ___ ___   __ / /__ / /_/ /___ __  / _ \\&quot;);
+        out.println(&quot; / _// __/ / / _ \\(_-&lt;/ -_) / // / -_) __/ __/ // /  \\_, /&quot;);
+        out.println(&quot;/___/\\__/_/_/ .__/___/\\__/  \\___/\\__/\\__/\\__/\\_, /  /___/&quot;);
+        out.println(&quot;           /_/                              /___/&quot;);
+    }
+</code></pre>
+
+<h2 id="传参分析">传参分析</h2>
+
+<p>接下来看传参了，可以看到lanuch主要干的事就是从&rdquo;jetty.launcher.configuration&rdquo;配置中取到一个配置文件路径，加载文件内容</p>
+
+<pre><code class="language-java">    protected void launch(String[] args) throws Exception {
+        long millis = System.currentTimeMillis();
+        boolean showInfo = System.getProperty(&quot;jetty.launcher.hideLaunchInfo&quot;) == null;
+        boolean consoleEnabled = System.getProperty(&quot;jetty.launcher.disableConsole&quot;) == null;
+        if (showInfo) {
+            this.printLogo(System.out);
+        }
+
+        String configurationFileDef = System.getProperty(&quot;jetty.launcher.configuration&quot;);
+        if (configurationFileDef == null) {
+            throw new IOException(String.format(&quot;-D%s missing&quot;, &quot;jetty.launcher.configuration&quot;));
+        } else {
+            File[] configurationFiles = getConfigurationFiles(configurationFileDef);
+            ServerAdapter adapter = this.createAdapter(configurationFiles, showInfo);
+            this.configure(System.out, adapter, configurationFiles, showInfo);
+            if (showInfo) {
+                adapter.info(System.out);
+            }
+
+            this.initConsole(consoleEnabled, adapter);
+            adapter.start();
+            if (showInfo) {
+                this.printStartupTime(System.out, millis, consoleEnabled);
+            }
+
+        }
+    }
+</code></pre>
+
+<h2 id="配置文件分析">配置文件分析</h2>
+
+<p>这个配置就在eclipse项目的最外面，找了一个，抽出一个模板，如下代码，中间需要替换的部分已经替换成了freemaker的变量（渲染直接用字符串替换也可以），主要的几个参数如下：
+* port 监听端口
+* webpath web主目录
+* webcontext  context路径
+* defaultsDescriptor 默认web.xml路径（可不配）
+* extraClasspath 其他需要加载的classpath路径（重点！jar包，多模块的编译结果路径全配在这）</p>
+
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;
+&lt;Configure class=&quot;org.eclipse.jetty.server.Server&quot; id=&quot;Server&quot;&gt;
+    &lt;!-- Thread Pool --&gt;
+    &lt;Get name=&quot;ThreadPool&quot;&gt;
+        &lt;Set name=&quot;minThreads&quot;&gt;1&lt;/Set&gt;
+        &lt;Set name=&quot;idleTimeout&quot;&gt;60000&lt;/Set&gt;
+        &lt;Set name=&quot;detailedDump&quot;&gt;false&lt;/Set&gt;
+    &lt;/Get&gt;
+    &lt;!-- HTTP Config --&gt;
+    &lt;New class=&quot;org.eclipse.jetty.server.HttpConfiguration&quot; id=&quot;httpConfig&quot;&gt;
+        &lt;Set name=&quot;secureScheme&quot;&gt;https&lt;/Set&gt;
+        &lt;Set name=&quot;outputBufferSize&quot;&gt;32768&lt;/Set&gt;
+        &lt;Set name=&quot;requestHeaderSize&quot;&gt;8192&lt;/Set&gt;
+        &lt;Set name=&quot;responseHeaderSize&quot;&gt;8192&lt;/Set&gt;
+        &lt;Set name=&quot;sendServerVersion&quot;&gt;true&lt;/Set&gt;
+        &lt;Set name=&quot;sendDateHeader&quot;&gt;false&lt;/Set&gt;
+        &lt;Set name=&quot;headerCacheSize&quot;&gt;512&lt;/Set&gt;
+    &lt;/New&gt;
+    &lt;!-- HTTP Connector --&gt;
+    &lt;Call name=&quot;addConnector&quot;&gt;
+        &lt;Arg&gt;
+            &lt;New class=&quot;org.eclipse.jetty.server.ServerConnector&quot;&gt;
+                &lt;Arg name=&quot;server&quot;&gt;
+                    &lt;Ref refid=&quot;Server&quot;/&gt;
+                &lt;/Arg&gt;
+                &lt;Arg name=&quot;factories&quot;&gt;
+                    &lt;Array type=&quot;org.eclipse.jetty.server.ConnectionFactory&quot;&gt;
+                        &lt;Item&gt;
+                            &lt;New class=&quot;org.eclipse.jetty.server.HttpConnectionFactory&quot;&gt;
+                                &lt;Arg name=&quot;config&quot;&gt;
+                                    &lt;Ref refid=&quot;httpConfig&quot;/&gt;
+                                &lt;/Arg&gt;
+                            &lt;/New&gt;
+                        &lt;/Item&gt;
+                    &lt;/Array&gt;
+                &lt;/Arg&gt;
+                &lt;Set name=&quot;port&quot;&gt;${port}&lt;/Set&gt;
+                &lt;Set name=&quot;idleTimeout&quot;&gt;30000&lt;/Set&gt;
+            &lt;/New&gt;
+        &lt;/Arg&gt;
+    &lt;/Call&gt;
+    &lt;!-- Handler --&gt;
+    &lt;Set name=&quot;handler&quot;&gt;
+        &lt;New class=&quot;org.eclipse.jetty.webapp.WebAppContext&quot;&gt;
+            &lt;Arg type=&quot;java.lang.String&quot;&gt;${webpath}&lt;/Arg&gt;
+            &lt;Arg type=&quot;java.lang.String&quot;&gt;${webcontext}&lt;/Arg&gt;
+            &lt;Set name=&quot;defaultsDescriptor&quot;&gt;${defaultsDescriptor}&lt;/Set&gt;
+            &lt;Set name=&quot;extraClasspath&quot;&gt;${extraClasspath}&lt;/Set&gt;
+        &lt;/New&gt;
+    &lt;/Set&gt;
+    &lt;!-- Annotations --&gt;
+    &lt;Call class=&quot;org.eclipse.jetty.webapp.Configuration$ClassList&quot; name=&quot;setServerDefault&quot;&gt;
+        &lt;Arg&gt;
+            &lt;Ref refid=&quot;Server&quot;/&gt;
+        &lt;/Arg&gt;
+        &lt;Call name=&quot;addBefore&quot;&gt;
+            &lt;Arg name=&quot;addBefore&quot; type=&quot;java.lang.String&quot;&gt;org.eclipse.jetty.webapp.JettyWebXmlConfiguration&lt;/Arg&gt;
+            &lt;Arg&gt;
+                &lt;Array type=&quot;java.lang.String&quot;&gt;
+                    &lt;Item&gt;
+                        org.eclipse.jetty.annotations.AnnotationConfiguration
+                    &lt;/Item&gt;
+                &lt;/Array&gt;
+            &lt;/Arg&gt;
+        &lt;/Call&gt;
+    &lt;/Call&gt;
+    &lt;!-- JNDI --&gt;
+    &lt;Call class=&quot;org.eclipse.jetty.webapp.Configuration$ClassList&quot; name=&quot;setServerDefault&quot;&gt;
+        &lt;Arg&gt;
+            &lt;Ref refid=&quot;Server&quot;/&gt;
+        &lt;/Arg&gt;
+        &lt;Call name=&quot;addAfter&quot;&gt;
+            &lt;Arg name=&quot;afterClass&quot; type=&quot;java.lang.String&quot;&gt;org.eclipse.jetty.webapp.FragmentConfiguration&lt;/Arg&gt;
+            &lt;Arg&gt;
+                &lt;Array type=&quot;java.lang.String&quot;&gt;
+                    &lt;Item&gt;org.eclipse.jetty.plus.webapp.EnvConfiguration&lt;/Item&gt;
+                    &lt;Item&gt;org.eclipse.jetty.plus.webapp.PlusConfiguration&lt;/Item&gt;
+                &lt;/Array&gt;
+            &lt;/Arg&gt;
+        &lt;/Call&gt;
+    &lt;/Call&gt;
+    &lt;!-- Extra Options --&gt;
+    &lt;Set name=&quot;stopAtShutdown&quot;&gt;true&lt;/Set&gt;
+    &lt;Set name=&quot;stopTimeout&quot;&gt;1000&lt;/Set&gt;
+    &lt;Set name=&quot;dumpAfterStart&quot;&gt;false&lt;/Set&gt;
+    &lt;Set name=&quot;dumpBeforeStop&quot;&gt;false&lt;/Set&gt;
+&lt;/Configure&gt;
+</code></pre>
+
+<h2 id="生成配置文件">生成配置文件</h2>
+
+<p>接下来就是怎么生成这个文件了，目前有两种方式：
+第一种，在eclipse里，把项目导入，配好插件，生成xml；在IDEA里新建一个项目，jetty.launcher.configuration设置好eclipse生成的配置文件路径即可。</p>
+
+<p>这种方式需要eclipse和idea都打开，配置不好的电脑容易卡，不过eclipse打开的唯一目的就是为了生成这个文件，可以把初始化的内存配置小点。好处就是方便，无需其他任何操作。</p>
+
+<p>另一种，就是写代码生成了，这其中最麻烦的是获取运行需要的各种classpath；classpath分两种，分别是
+* 各模块的 target/classes 路径
+* 第三方jar包的实际路径
+各模块的路径还是比较好获取，遍历一遍项目各模块目录，拼接即可。
+但直接遍历无法处理的是，开发过程中，可能部分模块暂时不需要，也就是没法完全按pom.xml的配置精确指定要加载的模块，不过大多数时候，全部加载进路径能应付大多数情况。</p>
+
+<p>第三方jar包的路径就比较不好获取了
+第一种方案，要精确获取各类jar包，那必然要解析pom.xml，想到的一个思路是调用maven的接口去获取，而目前暂时没有多余时间去研究
+第二种方案，借助IDE的配置文件，在IDEA的配置文件夹.idea里挨个看下即可发现jar包的实际路径在以下目录内.idea\libraries\xxx.xml，代码中要做的就是解析这些xml整合各个模块的依赖，最终生成classpath
+第三种方案，那就是直接打出war包，把lib目录下的jar包全部拷出，去除项目源码生成的jar包，就是第三方的所有jar包，遍历解压后的目录，加入classpath即可，操作起来最简单，但问题也最大，那就是更新完第三方包后，必须重新进行以上操作，如果忘记了，很容易出现各种诡异bug。</p>
+
+<p>由于第三方包变动不是很大，目前暂时采用第三种方案</p>
+
+<h2 id="完成">完成</h2>
+
+<p>配置文件搞定后，剩下的就是在业务项目下建个模块，整合上面写好的代码，生成配置文件，调用eclipse插件，传入配置文件路径，点击debug运行项目，热部署正常，终于可以愉快的调试代码了。</p>
+
+  
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
+    
+    <a href="https://JasonLiu798.github.io/post/code/ide/20170520-idea-jetty-maven%E5%A4%9A%E6%A8%A1%E5%9D%97%E7%83%AD%E9%83%A8%E7%BD%B2%E7%9A%84%E5%9D%91/"><i class="fa fa-chevron-left"></i></a>
+    
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="prev">
+      <a href="https://JasonLiu798.github.io/post/code/ide/20170520-idea-jetty-maven%E5%A4%9A%E6%A8%A1%E5%9D%97%E7%83%AD%E9%83%A8%E7%BD%B2%E7%9A%84%E5%9D%91/">IDEA jetty maven多模块热部署的坑</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
+    
+  </div>
+  <div class="pure-u-1-24" style="text-align: right;">
+    
+  </div>
+</div>
+
+
+
+  
+
+</div>
+
+
+<div class="gitcomments" id="container">
+</div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: 'IDEA maven多模块 使用jetty容器热部署解决方案', 
+  owner: 'JasonLiu798',
+  repo: 'JasonLiu798.github.io',
+  oauth: {
+    client_id: 'c0bc10b2101e2a6101e2',
+    client_secret: 'd8ef1cd91f59ae0f842933cd2847772ac1274112',
+  },
+})
+gitment.render('container')
+</script>
+
+<style>
+.gitcomments{
+  margin:50px;
+}
+</style>
+</div>
+</div>
+<script src="https://JasonLiu798.github.iojs/ui.js"></script>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-103593285-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+
+
+</body>
+</html>
+

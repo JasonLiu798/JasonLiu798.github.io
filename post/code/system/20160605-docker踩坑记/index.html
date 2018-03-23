@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.35" />
+
+  <title>docker踩坑记 &middot; JasonLiu&#39;s Blog</title>
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://JasonLiu798.github.io/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://JasonLiu798.github.io/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="https://JasonLiu798.github.io/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+ 
+  
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+  <link rel="shortcut icon" href="https://JasonLiu798.github.ioimg/favicon.ico" type="image/x-icon" />
+
+  
+  
+
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+  <a class="pure-menu-heading brand" href="https://JasonLiu798.github.io/">Menu</a>
+
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://JasonLiu798.github.io/"><i class='fa fa-home fa-fw'></i>Home</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://JasonLiu798.github.io/post/"><i class='fa fa-list fa-fw'></i>Posts</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://JasonLiu798.github.io/about/"><i class='fa fa-user fa-fw'></i>About</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://JasonLiu798.github.io/contact/"><i class='fa fa-phone fa-fw'></i>Contact</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://JasonLiu798.github.io/topics/"><i class='fa fa-folder fa-fw'></i>Topics</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://JasonLiu798.github.io/tags/"><i class='fa fa-tags fa-fw'></i>Tags</a>
+      
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://twitter.com/Asynct42" target="_blank"><i class="fa fa-twitter-square fa-fw"></i>Twitter</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://github.com/JasonLiu798" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </ul>
+</div>
+
+
+  <div>
+  <div class="small-print">
+    <small>&copy; 2018. All rights reserved.</small>
+  </div>
+  <div class="small-print">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>docker踩坑记</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+  <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>05 Jun 2016, 20:21</time>
+  </div>
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-folder fa-fw"></i>
+    
+      <a class="post-taxonomy-topic" href="https://JasonLiu798.github.iotopics/code">code</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-topic" href="https://JasonLiu798.github.iotopics/system">system</a>
+    
+  </div>
+  
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://JasonLiu798.github.iotags/code">code</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://JasonLiu798.github.iotags/system">system</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://JasonLiu798.github.iotags/docker">docker</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  <p>docker初步使用遇到的问题解决笔记</p>
+
+<p></p>
+
+<p>最近开始使用docker，一来是镜像开实例要比新建虚拟机要方便不少，二来docker发展的也相对成熟了，有了docker-toolbox这种一键安装包，docker-hub在国内也有各种各种镜像库了，资源获取比刚出来那阵要方便多了。不过坑还是不少，此总结下。</p>
+
+<p>#安装<br />
+安装推荐使用docker-toolbox，由于前面使用vagrant已经安装了virtual box，就不需要安装了，没有的话可以到oracle官网下载。</p>
+
+<p>#镜像<br />
+##找镜像<br />
+docker镜像在docker-hub可以下到，不过速度较慢，推荐国内几个两个资源
+<a href="https://dev.aliyun.com/search.html">阿里hub</a>
+<a href="http://get.daocloud.io/">daocloud</a></p>
+
+<p>##docker pull stuck<br />
+docker pull了一半，由于有其他事，机器暂时待机了，唤醒机器后，docker pull就卡着不动了。
+检查网络没有任何，等了几分钟左右，进度没有任何变化，只好强制中断。再次docker pull同一个镜像，下载进度还是从刚下载的地方开始，进度没有任何改变。</p>
+
+<p>没办法，只能想办法把下了一半的镜像，找到手动删除（固态硬盘的空间还是很宝贵的，一个镜像占掉了近1个G）。</p>
+
+<pre><code class="language-bash">&gt;docker info
+/mnt/sda1/var/lib/docker
+</code></pre>
+
+<p>可以找到docker主目录/var/lib/docker/，下好镜像存放在/var/lib/docker/image里，但没有刚下了一半的镜像。</p>
+
+<pre><code class="language-bash">docker@default:/mnt/sda1/var/lib/docker$ sudo ls
+aufs        containers  image       network     tmp         trust       volumes
+</code></pre>
+
+<p>ls下tmp目录，目录大小跟刚下载一半的镜像大小一样，可见下一半的东西就在这了，删除了此目录
+继续docker pull，仍然没法继续下载，应该在某个地方还有下载缓存，最后一招，重启docker-machine</p>
+
+<pre><code class="language-bash">docker-machine restart
+</code></pre>
+
+<p>再次尝试docker pull，终于开始重头下载了。</p>
+
+<p>##Error checking TLS connection: Error checking and/or regenerating the certs<br />
+由于docker-machine的ip是动态分配的，重启过一两次后，可能会分配一个不同的IP，需要重新生成证书才能ssh登录docker-machine。
+还一种解决方法就是设个固定IP，下面讲下如何配固定IP。</p>
+
+<p>##docker-machine 设置静态IP<br />
+docker-machine的linux版本是Core Linux，不是发行版，没法直接配静态IP。查看机器进程后，发现默认是通过udhcpc获取一个动态IP，重启后，有可能获取到不一样的IP。</p>
+
+<p>虽然可以通过<code>docker-machine env default</code>，获取到$DOCKER_HOST，但在需要固定IP的场合，还是比较麻烦。
+搜集资料后发现，docker-machine没有固定IP这个已经在github上提过一个issue，目前还没有修复，评论里有种方法测试可行：
+在/var/lib/boot2docker目录新建bootsync.sh，文件内设定固定IP</p>
+
+<pre><code>ifconfig eth1 192.168.99.150 netmask 255.255.255.0 broadcast 192.168.99.255 up
+</code></pre>
+
+<p>但是此方法设定的IP在机器启动每20分钟左右，就会被后台启动的dhcp client重新获取一次IP，IP被设置成了新IP。</p>
+
+<p>目前，临时解决方案有两种：</p>
+
+<ul>
+<li><p>把dhcp client关掉，dhcp client启动脚本可以在启动目录/etc/rc.d 找到，文件名dhcp.sh</p>
+
+<pre><code class="language-bash">if [ $DEVICE = &quot;eth1&quot; ]; then
+ ifconfig eth1 192.168.99.150 netmask 255.255.255.0 broadcast 192.168.99.255 up
+else
+...
+fi
+</code></pre>
+
+<p>在文件内的for循环加了个判断条件，如果是eth1网卡，则设定固定IP，else 其他网卡默认还通过dhcp获取IP</p></li>
+
+<li><p>不需要关闭dhcp client的方法，写个计划任务，1分钟重新设定一次IP</p>
+
+<pre><code>*/1 * * * * ifconfig eth1 192.168.99.150 netmask 255.255.255.0 broadcast 192.168.99.255 up
+</code></pre></li>
+</ul>
+
+  
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
+    
+    <a href="https://JasonLiu798.github.io/post/code/softwareengineering/20160513-%E5%8F%91%E7%89%88%E9%82%A3%E4%BA%9B%E4%BA%8B/"><i class="fa fa-chevron-left"></i></a>
+    
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="prev">
+      <a href="https://JasonLiu798.github.io/post/code/softwareengineering/20160513-%E5%8F%91%E7%89%88%E9%82%A3%E4%BA%9B%E4%BA%8B/">发版那些事</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="next">
+      <a href="https://JasonLiu798.github.io/post/code/ide/20170520-idea-jetty-maven%E5%A4%9A%E6%A8%A1%E5%9D%97%E7%83%AD%E9%83%A8%E7%BD%B2%E7%9A%84%E5%9D%91/">IDEA jetty maven多模块热部署的坑</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-1-24" style="text-align: right;">
+    
+    <a href="https://JasonLiu798.github.io/post/code/ide/20170520-idea-jetty-maven%E5%A4%9A%E6%A8%A1%E5%9D%97%E7%83%AD%E9%83%A8%E7%BD%B2%E7%9A%84%E5%9D%91/"><i class="fa fa-chevron-right"></i></a>
+    
+  </div>
+</div>
+
+
+
+  
+
+</div>
+
+
+<div class="gitcomments" id="container">
+</div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: 'docker踩坑记', 
+  owner: 'JasonLiu798',
+  repo: 'JasonLiu798.github.io',
+  oauth: {
+    client_id: 'c0bc10b2101e2a6101e2',
+    client_secret: 'd8ef1cd91f59ae0f842933cd2847772ac1274112',
+  },
+})
+gitment.render('container')
+</script>
+
+<style>
+.gitcomments{
+  margin:50px;
+}
+</style>
+</div>
+</div>
+<script src="https://JasonLiu798.github.iojs/ui.js"></script>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-103593285-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+
+
+</body>
+</html>
+

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Code on JasonLiu&#39;s Blog</title>
+    <link>https://JasonLiu798.github.io/topics/code/</link>
+    <description>Recent content in Code on JasonLiu&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018. All rights reserved.</copyright>
+    <lastBuildDate>Tue, 20 Jun 2017 00:00:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://JasonLiu798.github.io/topics/code/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>IDEA maven多模块 使用jetty容器热部署解决方案</title>
+      <link>https://JasonLiu798.github.io/post/code/ide/20170620-idea-maven%E5%A4%9A%E6%A8%A1%E5%9D%97-%E4%BD%BF%E7%94%A8jetty%E5%AE%B9%E5%99%A8%E7%83%AD%E9%83%A8%E7%BD%B2%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</link>
+      <pubDate>Tue, 20 Jun 2017 00:00:00 +0800</pubDate>
+      
+      <guid>https://JasonLiu798.github.io/post/code/ide/20170620-idea-maven%E5%A4%9A%E6%A8%A1%E5%9D%97-%E4%BD%BF%E7%94%A8jetty%E5%AE%B9%E5%99%A8%E7%83%AD%E9%83%A8%E7%BD%B2%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</guid>
+      <description>&lt;p&gt;接[IDEA maven多模块 使用jetty热部署]上文，尝试了IDEA自带的jetty插件（project structure的artifacts里的配置不定期丢失），maven的jetty插件（不能热部署，会导致整体重启），全都不能做到完美的多模块热部署，而eclipse的jetty插件这么好用，那就把移植过来吧，以下为具体解决方案&amp;hellip;
+&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>IDEA jetty maven多模块热部署的坑</title>
+      <link>https://JasonLiu798.github.io/post/code/ide/20170520-idea-jetty-maven%E5%A4%9A%E6%A8%A1%E5%9D%97%E7%83%AD%E9%83%A8%E7%BD%B2%E7%9A%84%E5%9D%91/</link>
+      <pubDate>Mon, 20 Mar 2017 12:02:11 +0800</pubDate>
+      
+      <guid>https://JasonLiu798.github.io/post/code/ide/20170520-idea-jetty-maven%E5%A4%9A%E6%A8%A1%E5%9D%97%E7%83%AD%E9%83%A8%E7%BD%B2%E7%9A%84%E5%9D%91/</guid>
+      <description>&lt;p&gt;idea mavne多模块，使用jetty容器热部署的开发大坑&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>docker踩坑记</title>
+      <link>https://JasonLiu798.github.io/post/code/system/20160605-docker%E8%B8%A9%E5%9D%91%E8%AE%B0/</link>
+      <pubDate>Sun, 05 Jun 2016 20:21:02 +0800</pubDate>
+      
+      <guid>https://JasonLiu798.github.io/post/code/system/20160605-docker%E8%B8%A9%E5%9D%91%E8%AE%B0/</guid>
+      <description>&lt;p&gt;docker初步使用遇到的问题解决笔记&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>发版那些事</title>
+      <link>https://JasonLiu798.github.io/post/code/softwareengineering/20160513-%E5%8F%91%E7%89%88%E9%82%A3%E4%BA%9B%E4%BA%8B/</link>
+      <pubDate>Fri, 13 May 2016 23:22:21 +0800</pubDate>
+      
+      <guid>https://JasonLiu798.github.io/post/code/softwareengineering/20160513-%E5%8F%91%E7%89%88%E9%82%A3%E4%BA%9B%E4%BA%8B/</guid>
+      <description>&lt;p&gt;发布流程改进&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>防火墙的坑</title>
+      <link>https://JasonLiu798.github.io/post/code/system/20160320-%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E5%9D%91/</link>
+      <pubDate>Sun, 20 Mar 2016 20:01:15 +0800</pubDate>
+      
+      <guid>https://JasonLiu798.github.io/post/code/system/20160320-%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E5%9D%91/</guid>
+      <description>&lt;p&gt;生产环境防火墙的坑&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>redis开发札记</title>
+      <link>https://JasonLiu798.github.io/post/code/database/20150910-redis%E5%BC%80%E5%8F%91%E6%9C%AD%E8%AE%B0/</link>
+      <pubDate>Sun, 20 Mar 2016 17:54:21 +0800</pubDate>
+      
+      <guid>https://JasonLiu798.github.io/post/code/database/20150910-redis%E5%BC%80%E5%8F%91%E6%9C%AD%E8%AE%B0/</guid>
+      <description>&lt;p&gt;redis开发躺坑记录&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>IDEA的一些坑(持续更新)</title>
+      <link>https://JasonLiu798.github.io/post/code/ide/20151028-idea%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/</link>
+      <pubDate>Wed, 28 Oct 2015 11:32:01 +0800</pubDate>
+      
+      <guid>https://JasonLiu798.github.io/post/code/ide/20151028-idea%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/</guid>
+      <description>&lt;p&gt;idea使用的一些常见问题解决总结&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>cygwin编译redis</title>
+      <link>https://JasonLiu798.github.io/post/code/system/20150927-cygwin%E7%BC%96%E8%AF%91redis/</link>
+      <pubDate>Sun, 27 Sep 2015 12:55:10 +0800</pubDate>
+      
+      <guid>https://JasonLiu798.github.io/post/code/system/20150927-cygwin%E7%BC%96%E8%AF%91redis/</guid>
+      <description>&lt;p&gt;由于经常使用cygwin，windows上又没有命令行版的redis客户端，因此准备编译一个，没想到遇到一个恶心问题。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
