@@ -69,6 +69,8 @@ id: '页面 ID', // 可选。默认为 location.href
 
 所以明白了原理后，就是因为id太长，导致初始化失败，现在就是要让id保证在50个字符内。
 
+### comment初始化
+https://github.com/imsun/gitment/issues/5
 
 
 ### 其他
