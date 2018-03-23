@@ -56,11 +56,16 @@ http://jasonliu798.github.io/?error=redirect_uri_mismatch&error_description=The+
 ### Error: Not Found
 repo库填写问题，详见[gitment issues 18](https://github.com/imsun/gitment/issues/18)
 owner填用户名，非用户id
+实际请求url
+https://api.github.com/repos/JasonLiu798/JasonLiu798.github.io/issues?creator=JasonLiu798&labels=https%3A%2F%2Fjasonliu798.github.io%2Fpost%2Fcode%2Fide%2F20170620-idea-maven%25E5%25A4%259A%25E6%25A8%25A1%25E5%259D%2597-%25E4%25BD%25BF%25E7%2594%25A8jetty%25E5%25AE%25B9%25E5%2599%25A8%25E7%2583%25AD%25E9%2583%25A8%25E7%25BD%25B2%25E8%25A7%25A3%25E5%2586%25B3%25E6%2596%25B9%25E6%25A1%2588%2F
 
+### 其他
+[其他问题，参见作者项目的Issue](https://github.com/imsun/gitment/issues)
+
+[hexo](https://www.juhe.cn/news/index/id/1852)
 
 配置主题文件_config.yml时，格式错误，比如gitment前有空格也会造成代码生成问题；
 Error: Not Found问题，
-其他问题，参见作者项目的Issue
-作者提醒使用本项目的用户，请保持克制，切勿滥用。详见 Gitment：使用 GitHub Issues 搭建评论系统
+
 
 

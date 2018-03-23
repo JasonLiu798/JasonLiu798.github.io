@@ -1,5 +1,12 @@
 #!/bin/bash
 
-hugo --theme=blackburn --baseUrl="https://JasonLiu798.github.io"
+set -x
+cd ../
+rm -rf  `ls ./ |grep -v -E 'Readme|src|git'`
 
+cd ./src
+rm -rf public
+hugo
+
+mv public/* ../
 
