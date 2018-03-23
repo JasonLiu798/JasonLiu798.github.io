@@ -1,0 +1,43 @@
+{{ partial "header.html" . }}
+
+<div class="header">
+  <h1>{{ .Title }}</h1>
+  <h2>{{ .Description }}</h2>
+</div>
+<div class="content">
+
+  {{ partial "post_meta.html" . }}
+
+  {{ .Content }}
+
+  {{ partial "prev_next_post.html" . }}
+
+  {{ partial "disqus.html" . }}
+
+</div>
+
+<!-- gitment start -->
+<div class="gitcomments" id="container">
+</div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: '{{ .Title }}', // 可选。默认为 location.href
+  // owner: '3724957',
+  owner: 'JasonLiu798',
+  repo: 'JasonLiu798.github.io',
+  oauth: {
+    client_id: 'c0bc10b2101e2a6101e2',
+    client_secret: 'd8ef1cd91f59ae0f842933cd2847772ac1274112',
+  },
+})
+gitment.render('container')
+</script>
+<!-- gitment end -->
+<style>
+.gitcomments{
+  margin:50px;
+}
+</style>
+{{ partial "footer.html" . }}
