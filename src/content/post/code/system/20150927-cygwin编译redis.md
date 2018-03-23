@@ -10,9 +10,6 @@ draft: false
 
 <!--more-->
 
-
-由于经常使用cygwin，windows上又没有命令行版的redis客户端，因此准备编译一个，没想到遇到一个恶心问题。
-
 先到官网下了源码
 ```shell
 wget https://github.com/antirez/redis/archive/2.8.22.tar.gz

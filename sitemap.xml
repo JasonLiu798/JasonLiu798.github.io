@@ -59,13 +59,13 @@
   </url>
   
   <url>
-    <loc>https://jasonliu798.github.io/tags/code/</loc>
+    <loc>https://jasonliu798.github.io/topics/code/</loc>
     <lastmod>2017-06-20T00:00:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://jasonliu798.github.io/topics/code/</loc>
+    <loc>https://jasonliu798.github.io/tags/code/</loc>
     <lastmod>2017-06-20T00:00:00+08:00</lastmod>
     <priority>0</priority>
   </url>
@@ -83,13 +83,13 @@
   </url>
   
   <url>
-    <loc>https://jasonliu798.github.io/tags/game/</loc>
+    <loc>https://jasonliu798.github.io/topics/game/</loc>
     <lastmod>2015-11-14T19:59:21+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://jasonliu798.github.io/topics/game/</loc>
+    <loc>https://jasonliu798.github.io/tags/game/</loc>
     <lastmod>2015-11-14T19:59:21+08:00</lastmod>
     <priority>0</priority>
   </url>
@@ -101,13 +101,13 @@
   </url>
   
   <url>
-    <loc>https://jasonliu798.github.io/tags/ide/</loc>
+    <loc>https://jasonliu798.github.io/topics/ide/</loc>
     <lastmod>2017-06-20T00:00:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://jasonliu798.github.io/topics/ide/</loc>
+    <loc>https://jasonliu798.github.io/tags/ide/</loc>
     <lastmod>2017-06-20T00:00:00+08:00</lastmod>
     <priority>0</priority>
   </url>
@@ -143,25 +143,25 @@
   </url>
   
   <url>
-    <loc>https://jasonliu798.github.io/tags/softwareengineering/</loc>
-    <lastmod>2016-05-13T23:22:21+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://jasonliu798.github.io/topics/softwareengineering/</loc>
     <lastmod>2016-05-13T23:22:21+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://jasonliu798.github.io/tags/system/</loc>
-    <lastmod>2016-06-05T20:21:02+08:00</lastmod>
+    <loc>https://jasonliu798.github.io/tags/softwareengineering/</loc>
+    <lastmod>2016-05-13T23:22:21+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://jasonliu798.github.io/topics/system/</loc>
+    <lastmod>2016-06-05T20:21:02+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jasonliu798.github.io/tags/system/</loc>
     <lastmod>2016-06-05T20:21:02+08:00</lastmod>
     <priority>0</priority>
   </url>

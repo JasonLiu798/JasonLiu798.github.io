@@ -7,8 +7,12 @@ title: "about"
 # JasonLiu's blog
 
 * code
-	- java
-	- python
-	- php
+	- Database
+		+ redis
+		+ mysql
+	- IDE
+		+ IDEA
+	- SoftwareEngineering
+	- System
 
 * model making

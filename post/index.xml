@@ -28,7 +28,7 @@
       <pubDate>Mon, 20 Mar 2017 12:02:11 +0800</pubDate>
       
       <guid>https://jasonliu798.github.io/post/code/ide/20170520-idea-jetty-maven%E5%A4%9A%E6%A8%A1%E5%9D%97%E7%83%AD%E9%83%A8%E7%BD%B2%E7%9A%84%E5%9D%91/</guid>
-      <description>&lt;p&gt;idea mavne多模块，使用jetty容器热部署的开发大坑&lt;/p&gt;
+      <description>&lt;p&gt;IDEA这个IDE虽然很好用，但是jetty插件这块问题很多，这里总结下遇到的坑&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
     </item>
@@ -50,7 +50,7 @@
       <pubDate>Fri, 13 May 2016 23:22:21 +0800</pubDate>
       
       <guid>https://jasonliu798.github.io/post/code/softwareengineering/20160513-%E5%8F%91%E7%89%88%E9%82%A3%E4%BA%9B%E4%BA%8B/</guid>
-      <description>&lt;p&gt;发布流程改进&lt;/p&gt;
+      <description>&lt;p&gt;随着公司业务需求不断增长，发布也是越来越频繁，周一到周五，各种发布不停，本来计划下午就能上线的，缺因为各种原因拖到晚上，甚至第二天凌晨，总结以下原因大概有以下这些。&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
     </item>
@@ -83,7 +83,7 @@
       <pubDate>Sat, 14 Nov 2015 19:59:21 +0800</pubDate>
       
       <guid>https://jasonliu798.github.io/post/game/20151114-heartstone-jackson/</guid>
-      <description>&lt;p&gt;6回合抽到杰克逊的概率
+      <description>&lt;p&gt;炉石传说6回合抽到杰克逊的概率
 
 
 &lt;div class=&#34;pure-g&#34;&gt;

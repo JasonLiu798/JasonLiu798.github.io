@@ -28,7 +28,7 @@
       <pubDate>Mon, 20 Mar 2017 12:02:11 +0800</pubDate>
       
       <guid>https://jasonliu798.github.io/post/code/ide/20170520-idea-jetty-maven%E5%A4%9A%E6%A8%A1%E5%9D%97%E7%83%AD%E9%83%A8%E7%BD%B2%E7%9A%84%E5%9D%91/</guid>
-      <description>&lt;p&gt;idea mavne多模块，使用jetty容器热部署的开发大坑&lt;/p&gt;
+      <description>&lt;p&gt;IDEA这个IDE虽然很好用，但是jetty插件这块问题很多，这里总结下遇到的坑&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
     </item>
