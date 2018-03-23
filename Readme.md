@@ -28,6 +28,10 @@ git clone git@github.com:spf13/hyde.git themes/hyde
 [Gitment：使用 GitHub Issues 搭建评论系统](https://imsun.net/posts/gitment-introduction/)
 https://github.com/imsun/gitment
 
+## 查看github ID
+https://api.github.com/users/JasonLiu798
+
+
 https://github.com/settings/applications/690942
 Client ID
 c0bc10b2101e2a6101e2
